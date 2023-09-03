@@ -8,6 +8,8 @@ import Home from './pages/Home';
 import ListEmployees from './pages/ListEmployees';
 import Error404 from './pages/Error404';
 import Layout from './components/Layout';
+import { store } from './redux/store';
+import { Provider } from 'react-redux';
 
 function App() {
   const router = createBrowserRouter(
@@ -30,7 +32,9 @@ function App() {
   );
 
   return (
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   );
 }
 

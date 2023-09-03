@@ -3,6 +3,8 @@ import SelectFrom from "./SelectFrom";
 import departements from '../data/departements'
 import states from '../data/states'
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createEmployee } from "../redux/features/employeesSlice";
 
 
 const EmployeeCreationForm = () => {
@@ -16,9 +18,12 @@ const EmployeeCreationForm = () => {
     const [state, setState] = useState('')
     const [zipCode, setZipCode] = useState(0)
 
+    const dispatch = useDispatch()
+    const listEmployees = useSelector((state)=>state.employees.list)
+
     const handleSubmit = (event) =>{
         event.preventDefault();
-        console.log({
+        const employee = {
             firstName: firstName,
             lastName : lastName,
             birthdate : birthdate,
@@ -28,7 +33,17 @@ const EmployeeCreationForm = () => {
             city: city,
             state: state,
             zipCode: zipCode,
-        })
+        }
+
+        const valuesEmployee = Object.values(employee);
+
+        for (const value of valuesEmployee) {
+            if(value==='' || value===0){
+                throw new Error("field(s) is empty");
+            }
+        }
+
+        dispatch(createEmployee([...listEmployees,employee]));
     }
 
     return (
