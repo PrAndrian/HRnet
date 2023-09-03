@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root{
+        font-family: 'Montserrat', sans-serif;
+        font-family: 'Playfair Display', serif;
+
+        background: #F8FFEC;
+        color : #414A3D;
+        font-size : 1.125rem;
+
+        --color-primary: 147 173 22;
+        --color-secondary: 109 132 15;
+        --color-tertiary: 192 223 161;
+        --color-white: 192 223 161;
+        --color-transparent: 0 0 0 0;
+    }
+}
