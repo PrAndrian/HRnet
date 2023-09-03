@@ -52,7 +52,7 @@ const EmployeeCreationForm = () => {
         id="create-employee"
         className="flex flex-col grow justify-center items-center"
     >
-        <div className="flex justify-center gap-10 mb-[50px] w-full" >
+        <div className="flex justify-center gap-40 mb-[50px] w-full" >
             <fieldset className="
                 flex 
                 flex-col 
