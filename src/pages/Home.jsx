@@ -10,6 +10,7 @@ const Home = () => {
         <SeparationUI/>
         <EmployeeCreationForm/>
         <SeparationUI/>
+        <footer className="h-[105px]"/>
     </>
   )
 }

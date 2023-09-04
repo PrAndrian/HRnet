@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom'
 const Layout = () => {
   return (
     <>
-    <div className='flex'>
+    <div className='flex h-screen'>
         <Navbar/>
-        <main className="flex flex-col mx-[24px] mt-[102px] mb-[105px] w-full">
+        <main className="flex flex-col mx-[24px] mt-[102px] w-full">
           <Outlet/>
         </main>
     </div>

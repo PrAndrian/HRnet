@@ -3,7 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
 
-const SearchBar = ({id,setter}) => {
+const SearchBar = ({id,setter,listEmployees}) => {
+    console.log(listEmployees)
+
     const handleValue = (event) => {
         event.preventDefault();
         setter(event.target.value)
@@ -48,7 +50,8 @@ const SearchBar = ({id,setter}) => {
 
 SearchBar.propTypes = {
     id : PropTypes.string.isRequired, 
-    setter : PropTypes.func.isRequired 
+    setter : PropTypes.func.isRequired,
+    listEmployees : PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string || PropTypes.number))
 }
 
 export default SearchBar

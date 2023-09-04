@@ -5,6 +5,8 @@ import SearchBar from "../components/SearchBar";
 import { Link } from "react-router-dom";
 import EmployeeTable from "../components/EmployeeTable";
 import { useSelector } from "react-redux";
+import ShowingRowTable from "../components/ShowingRowTable";
+import PaginationTable from "../components/PaginationTable";
 
 const ListEmployees = () => {
   const listEmployees = useSelector((state) => state.employees.list)
@@ -15,7 +17,13 @@ const ListEmployees = () => {
       </h1>
       <SeparationUI/>
 
-      <div className="flex justify-between items-center pt-[32px] pb-[50px]">
+      <div className="
+        flex 
+        justify-between 
+        items-center 
+        pt-[32px] 
+        pb-[50px]
+      ">
           <Link 
             to='/' 
             className="
@@ -35,7 +43,18 @@ const ListEmployees = () => {
         
         <SearchBar id={"searchEmployees"} setter={()=>{}}/>
       </div>
-      <EmployeeTable listEmployees={listEmployees}/>
+      
+      <div className="
+        overflow-y-hidden 
+        overflow-x-auto
+      ">
+        <EmployeeTable listEmployees={listEmployees}/>
+      </div>
+      
+      <footer className="flex justify-between h-[105px] py-6">
+        <ShowingRowTable setter={()=>{}}/>
+        <PaginationTable/>
+      </footer>
     </>
   )
 }
