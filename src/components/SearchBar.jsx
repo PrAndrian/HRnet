@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
 
-const SearchBar = ({id,type,setter}) => {
+const SearchBar = ({id,setter}) => {
     const handleValue = (event) => {
         event.preventDefault();
         setter(event.target.value)
@@ -26,7 +26,7 @@ const SearchBar = ({id,type,setter}) => {
             </div>
             <input 
                 id={id} 
-                type={type} 
+                type={"text"} 
                 className="
                     w-full
                     rounded-r-lg
@@ -48,8 +48,6 @@ const SearchBar = ({id,type,setter}) => {
 
 SearchBar.propTypes = {
     id : PropTypes.string.isRequired, 
-    type : PropTypes.string.isRequired,
-    placeholder : PropTypes.string.isRequired, 
     setter : PropTypes.func.isRequired 
 }
 
