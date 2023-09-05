@@ -17,7 +17,7 @@ const Home = () => {
       setShowToast(false);
       setToastMessage('');
       setError(false);
-    }, 3000); // Le toast disparaîtra après 3 secondes
+    }, 5000); // Le toast disparaîtra après 3 secondes
   };
 
   return (
