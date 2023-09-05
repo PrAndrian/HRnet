@@ -1,20 +1,19 @@
 import PropTypes from 'prop-types';
 
-const ShowingRowTable = ({setter,listEmployees}) => {
-    const handleValue = (event) => {
-        event.preventDefault();
-        setter(event.target.value)
-    }
-
-    console.log(listEmployees)
-
+const ShowingRowTable = ({itemsPerPage, onItemsPerPageChange}) => {
+    const handleItemsPerPageChange = (event) => {
+        const selectedItemsPerPage = parseInt(event.target.value, 10);
+        onItemsPerPageChange(selectedItemsPerPage);
+      };
+    
     return (
     <span>
-        Show 
+        <label htmlFor="show-rows" className="mr-2">
+            Show
+        </label>
         &nbsp;
         <select 
-            name={"selectRows"} 
-            id={"selectRows"}
+            id="show-rows"
             className="
                 rounded-lg
                 border
@@ -26,12 +25,13 @@ const ShowingRowTable = ({setter,listEmployees}) => {
                 font-bold
                 cursor-pointer
             " 
-            onChange={handleValue}
+            value={itemsPerPage}
+            onChange={handleItemsPerPageChange}
         >
-            <option>10 rows</option>
-            <option>25 rows</option>
-            <option>50 rows</option>
-            <option>100 rows</option>
+            <option value={10}>10 rows</option>
+            <option value={25}>25 rows</option>
+            <option value={50}>50 rows</option>
+            <option value={100}>100 rows</option>
         </select>
         &nbsp; 
         1-10 of 50
@@ -40,9 +40,9 @@ const ShowingRowTable = ({setter,listEmployees}) => {
 }
 
 ShowingRowTable.propTypes = {
-    setter : PropTypes.func.isRequired,
-    listEmployees : PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string || PropTypes.number))
-}
-
+    itemsPerPage: PropTypes.number.isRequired,
+    onItemsPerPageChange: PropTypes.func.isRequired,
+};
+  
 
 export default ShowingRowTable

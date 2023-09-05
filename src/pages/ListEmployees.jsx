@@ -11,7 +11,7 @@ import { useState } from "react";
 
 const ListEmployees = () => {
   const listEmployees = useSelector((state) => state.employees.list) 
-  const itemsPerPage = 5
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -20,6 +20,11 @@ const ListEmployees = () => {
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
+  };
+
+  const handleItemsPerPageChange = (newItemsPerPage) => {
+    setItemsPerPage(newItemsPerPage);
+    setCurrentPage(1); // Revenir à la première page lorsque le nombre d'éléments par page change
   };
 
   return (
@@ -70,7 +75,10 @@ const ListEmployees = () => {
         border-[#414A3D] 
         border-opacity-40
       ">
-        <ShowingRowTable setter={()=>{}}/>
+        <ShowingRowTable
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={handleItemsPerPageChange}
+        />
         <PaginationTable
           totalItems={listEmployees.length}
           itemsPerPage={itemsPerPage}
