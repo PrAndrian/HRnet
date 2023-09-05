@@ -1,15 +1,17 @@
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 
-const SearchBar = ({id,setter,listEmployees}) => {
-    console.log(listEmployees)
+const SearchBar = ({onSearch }) => {
+    const [searchTerm, setSearchTerm] = useState('');
 
-    const handleValue = (event) => {
-        event.preventDefault();
-        setter(event.target.value)
-    }
+    const handleSearchChange = (event) => {
+      const value = event.target.value;
+      setSearchTerm(value);
+      onSearch(value);
+    };
 
     return (
         <div className='flex w-[360px] h-[45px]'>
@@ -27,7 +29,7 @@ const SearchBar = ({id,setter,listEmployees}) => {
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
             </div>
             <input 
-                id={id} 
+                id={"searbar-table"} 
                 type={"text"} 
                 className="
                     w-full
@@ -41,17 +43,17 @@ const SearchBar = ({id,setter,listEmployees}) => {
                     font-bold
                     pl-1
                 " 
-                onChange={handleValue}
+                onChange={handleSearchChange}
                 placeholder={'Search'}
+                value={searchTerm}
             />
         </div>
     )
 }
 
 SearchBar.propTypes = {
-    id : PropTypes.string.isRequired, 
-    setter : PropTypes.func.isRequired,
-    listEmployees : PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string || PropTypes.number))
-}
+onSearch: PropTypes.func.isRequired,
+};
+  
 
 export default SearchBar

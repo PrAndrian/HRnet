@@ -11,12 +11,14 @@ import { useState } from "react";
 
 const ListEmployees = () => {
   const listEmployees = useSelector((state) => state.employees.list) 
+
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchResults, setSearchResults] = useState(listEmployees);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = listEmployees.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = searchResults.slice(indexOfFirstItem, indexOfLastItem);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -24,7 +26,17 @@ const ListEmployees = () => {
 
   const handleItemsPerPageChange = (newItemsPerPage) => {
     setItemsPerPage(newItemsPerPage);
-    setCurrentPage(1); // Revenir à la première page lorsque le nombre d'éléments par page change
+    setCurrentPage(1);
+  };
+
+  const handleSearch = (searchTerm) => {
+    const filteredResults = listEmployees.filter((employee) =>{
+      return Object.values(employee).some((value) =>
+        value.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
+    setSearchResults(filteredResults);
+    setCurrentPage(1);
   };
 
   return (
@@ -58,7 +70,7 @@ const ListEmployees = () => {
             New
           </Link>
         
-        <SearchBar id={"searchEmployees"} setter={()=>{}}/>
+        <SearchBar onSearch={handleSearch}/>
       </div>
       
       <div className="overflow-y-hidden overflow-x-auto grow">
