@@ -5,9 +5,9 @@ import states from '../data/states'
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createEmployee } from "../redux/features/employeesSlice";
+import PropTypes from 'prop-types';
 
-
-const EmployeeCreationForm = () => {
+const EmployeeCreationForm = ({onToast}) => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [birthdate, setBirthdate] = useState('')
@@ -20,6 +20,8 @@ const EmployeeCreationForm = () => {
 
     const dispatch = useDispatch()
     const listEmployees = useSelector((state)=>state.employees.list)
+
+    const [error, setError] = useState(false);
 
     const handleSubmit = (event) =>{
         event.preventDefault();
@@ -39,11 +41,15 @@ const EmployeeCreationForm = () => {
 
         for (const value of valuesEmployee) {
             if(value==='' || value===0){
-                throw new Error("field(s) is empty");
+                setError(true);
+                onToast(true, 'Veuillez remplir tous les champs.');
+                throw new Error("field(s) is empty : "+error);
             }
         }
 
         dispatch(createEmployee([...listEmployees,employee]));
+        setError(false);
+        onToast(false, 'Employé ajouté avec succès !')
     }
 
     return (
@@ -161,5 +167,10 @@ const EmployeeCreationForm = () => {
     </form>
   )
 }
+
+EmployeeCreationForm.propTypes = {
+    onToast: PropTypes.func.isRequired,
+};
+  
 
 export default EmployeeCreationForm

@@ -12,6 +12,7 @@ export default {
       tertiary: 'rgb(var(--color-tertiary) / <alpha-value>)',
       white: 'rgb(var(--color-white) / <alpha-value>)',
       transparent: 'rgb(var(--color-transparent) / <alpha-value>)',
+      red: 'rgb(var(--color-red) / <alpha-value>)',
     },
     extend: {},
   },
