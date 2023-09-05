@@ -42,7 +42,6 @@ const ShowingRowTable = ({setter,listEmployees}) => {
 ShowingRowTable.propTypes = {
     setter : PropTypes.func.isRequired,
     listEmployees : PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string || PropTypes.number))
-
 }
 
 

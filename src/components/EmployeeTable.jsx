@@ -21,12 +21,9 @@ const EmployeeTable = ({listEmployees}) => {
                 grow
                 w-[1440px]
                 lg:w-[auto]
-                h-[439px]
+                h-[500px]
                 overflow-x-hidden 
                 overflow-y-auto
-                border-b 
-                border-[#414A3D] 
-                border-opacity-40
             ">
             <thead className="sticky top-0">
                 <tr className="flex h-[60px] items-center bg-tertiary rounded-t-lg">
@@ -63,7 +60,6 @@ const EmployeeTable = ({listEmployees}) => {
                     className="
                         flex                  
                         border-b 
-                        last:border-b-0 
                         border-[#414A3D] 
                         border-opacity-40
                     ">
@@ -75,6 +71,7 @@ const EmployeeTable = ({listEmployees}) => {
                             overflow-hidden
                             whitespace-nowrap
                             pl-5
+                            pt-4
                         ">
                         {value}
                     </td>

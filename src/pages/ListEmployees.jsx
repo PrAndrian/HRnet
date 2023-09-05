@@ -7,9 +7,21 @@ import EmployeeTable from "../components/EmployeeTable";
 import { useSelector } from "react-redux";
 import ShowingRowTable from "../components/ShowingRowTable";
 import PaginationTable from "../components/PaginationTable";
+import { useState } from "react";
 
 const ListEmployees = () => {
-  const listEmployees = useSelector((state) => state.employees.list)
+  const listEmployees = useSelector((state) => state.employees.list) 
+  const itemsPerPage = 5
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = listEmployees.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
   return (
     <>
       <h1 className="text-secondary text-[40px] w-[260px]">
@@ -44,16 +56,27 @@ const ListEmployees = () => {
         <SearchBar id={"searchEmployees"} setter={()=>{}}/>
       </div>
       
-      <div className="
-        overflow-y-hidden 
-        overflow-x-auto
-      ">
-        <EmployeeTable listEmployees={listEmployees}/>
+      <div className="overflow-y-hidden overflow-x-auto grow">
+        <EmployeeTable listEmployees={currentItems}/>
       </div>
-      
-      <footer className="flex justify-between h-[105px] py-6">
+
+      <footer className="
+        flex
+        justify-between
+        items-centers
+        py-6
+        h-[105px]
+        border-t 
+        border-[#414A3D] 
+        border-opacity-40
+      ">
         <ShowingRowTable setter={()=>{}}/>
-        <PaginationTable/>
+        <PaginationTable
+          totalItems={listEmployees.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </footer>
     </>
   )
