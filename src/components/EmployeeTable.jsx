@@ -1,19 +1,48 @@
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import PropTypes from 'prop-types';
+import { useState } from "react";
 
 const EmployeeTable = ({listEmployees}) => {
-    const valuesColumn = [
-        "First Name",
-        "Last Name",
-        "Date of Birth",
-        "Start Date",
-        "Department",
-        "Street",
-        "City",
-        "State",
-        "Zip Code"
-    ]
+    const columns = [
+        { label: "First Name", value: "firstName" },
+        { label: "Last Name", value: "lastName" },
+        { label: "Date de naissance", value: "birthdate" },
+        { label: "Date de début", value: "startDate" },
+        { label: "Département", value: "departement" },
+        { label: "Rue", value: "street" },
+        { label: "Ville", value: "city" },
+        { label: "État", value: "state" },
+        { label: "Code postal", value: "zipCode" }
+    ];
+
+    const [sortColumn, setSortColumn] = useState(null);
+    const [sortOrder, setSortOrder] = useState('asc');
+
+    const toggleSortOrder = () => {
+        setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    };
+
+    const sortData = (data, columnIndex, order) => {
+        return data.sort((a, b) => {
+            const valueA = a[columnIndex]
+            const valueB = b[columnIndex]
+
+            if (order === 'asc') {
+                return valueA.localeCompare(valueB);
+            } else {
+                return valueB.localeCompare(valueA);
+            }
+        });
+    };
+
+    const handleSortClick = (columnIndex) => {
+        setSortColumn(columnIndex);
+        toggleSortOrder();
+    };
+
+    const sortedData = sortColumn !== null ? sortData([...listEmployees], sortColumn, sortOrder) : listEmployees;
+
     return (
         <table className="
                 flex 
@@ -27,9 +56,9 @@ const EmployeeTable = ({listEmployees}) => {
             ">
             <thead className="sticky top-0">
                 <tr className="flex h-[60px] items-center bg-tertiary rounded-t-lg">
-                {valuesColumn.map((value, index) =>(
+                {columns.map((column) =>(
                     <th 
-                        key={index}
+                        key={column.value}
                         className="
                             flex 
                             flex-1 
@@ -37,16 +66,23 @@ const EmployeeTable = ({listEmployees}) => {
                             pl-5
                         "
                     >
-                        {value}
-                        <div className="flex flex-col pl-4">
-                            <FontAwesomeIcon 
-                                className={"w-3 h-3 cursor-pointer"} 
-                                icon={faChevronUp} 
-                            />
-                            <FontAwesomeIcon 
-                                className={"w-3 h-3 cursor-pointer"} 
-                                icon={faChevronDown} 
-                            />
+                        {column.label}
+                        <div 
+                            className="flex flex-col pl-4"
+                            onClick={() => handleSortClick(column.value)}
+                        >
+                             {sortColumn === column.label && sortOrder === 'asc' ? 
+                                <FontAwesomeIcon 
+                                    className={"w-3 h-3 cursor-pointer"} 
+                                    icon={faChevronUp} 
+                                /> 
+                            : 
+                                <FontAwesomeIcon 
+                                    className={"w-3 h-3 cursor-pointer"} 
+                                    icon={faChevronDown} 
+                                />
+                            }
+                            
                         </div>
                     </th>
                 ))}
@@ -54,7 +90,7 @@ const EmployeeTable = ({listEmployees}) => {
             </thead>
             <tbody 
                 >
-                {listEmployees.map((employee, index) =>(
+                {sortedData.map((employee, index) =>(
                 <tr 
                     key={index}
                     className="
@@ -63,8 +99,8 @@ const EmployeeTable = ({listEmployees}) => {
                         border-[#414A3D] 
                         border-opacity-40
                     ">
-                    {Object.values(employee).map((value)=>(
-                        <td key={value} className="
+                    {Object.values(employee).map((value,i)=>(
+                        <td key={value+i} className="
                             flex-1
                             h-[60px]
                             text-ellipsis 
@@ -84,7 +120,7 @@ const EmployeeTable = ({listEmployees}) => {
 }
 
 EmployeeTable.propTypes = {
-    listEmployees : PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string || PropTypes.number))
+    listEmployees : PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string || PropTypes.number)),
 }
 
 export default EmployeeTable

@@ -14,11 +14,10 @@ const ListEmployees = () => {
 
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchResults, setSearchResults] = useState(listEmployees);
+  const [currentItems, setSearchResults] = useState(listEmployees);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  searchResults.slice(indexOfFirstItem, indexOfLastItem);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -30,7 +29,12 @@ const ListEmployees = () => {
   };
 
   const handleSearch = (searchTerm) => {
-    const filteredResults = listEmployees.filter((employee) =>{
+    if(searchTerm===''){
+      setSearchResults(listEmployees)
+      return;
+    }
+
+    const filteredResults = currentItems.filter((employee) =>{
       return Object.values(employee).some((value) =>
         value.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -74,7 +78,11 @@ const ListEmployees = () => {
       </div>
       
       <div className="overflow-y-hidden overflow-x-auto grow">
-        <EmployeeTable listEmployees={searchResults.slice(indexOfFirstItem, indexOfLastItem)}/>
+        <EmployeeTable 
+          listEmployees={
+            currentItems.slice(indexOfFirstItem, indexOfLastItem)
+          }
+        />
       </div>
 
       <footer className="
@@ -92,7 +100,7 @@ const ListEmployees = () => {
           onItemsPerPageChange={handleItemsPerPageChange}
         />
         <PaginationTable
-          totalItems={searchResults.length}
+          totalItems={currentItems.length}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
           onPageChange={handlePageChange}

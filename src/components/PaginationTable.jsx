@@ -17,9 +17,7 @@ const PaginationTable = ({ totalItems, itemsPerPage, currentPage, onPageChange }
       const isActive = currentPage === pageNumber;
       const buttonClasses = `inline-block px-3 py-1 rounded-full focus:outline-none ${
         isActive ? 'bg-tertiary' : 'hover:bg-tertiary'
-      } ${
-        totalPages === 1 ? 'hidden' : 'visible'
-      }`;
+      } `;
   
       return (
         <button
@@ -35,7 +33,9 @@ const PaginationTable = ({ totalItems, itemsPerPage, currentPage, onPageChange }
   
 
   return (
-    <nav className="flex justify-center ">
+    <nav className={`flex justify-center ${
+      totalPages === 1 ? 'invisible' : 'visible'
+    }`}>
       <ul className="inline-flex items-center space-x-2">
         <li className={`rounded-md ${currentPage === 1 ? 'invisible' : ''}`}>
           <button
