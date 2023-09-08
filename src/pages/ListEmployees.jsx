@@ -18,7 +18,7 @@ const ListEmployees = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = searchResults.slice(indexOfFirstItem, indexOfLastItem);
+  searchResults.slice(indexOfFirstItem, indexOfLastItem);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -74,7 +74,7 @@ const ListEmployees = () => {
       </div>
       
       <div className="overflow-y-hidden overflow-x-auto grow">
-        <EmployeeTable listEmployees={currentItems}/>
+        <EmployeeTable listEmployees={searchResults.slice(indexOfFirstItem, indexOfLastItem)}/>
       </div>
 
       <footer className="
@@ -92,7 +92,7 @@ const ListEmployees = () => {
           onItemsPerPageChange={handleItemsPerPageChange}
         />
         <PaginationTable
-          totalItems={listEmployees.length}
+          totalItems={searchResults.length}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
           onPageChange={handlePageChange}

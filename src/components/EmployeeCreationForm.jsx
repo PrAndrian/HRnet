@@ -56,7 +56,7 @@ const EmployeeCreationForm = ({onToast}) => {
     <form 
         onSubmit={handleSubmit} 
         id="create-employee"
-        className="flex flex-col grow justify-center items-center"
+        className="flex flex-col grow justify-center items-center p-5"
     >
         <div className="flex justify-center gap-40 mb-[50px] w-full" >
             <fieldset className="
