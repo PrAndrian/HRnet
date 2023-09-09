@@ -59,7 +59,7 @@ const EmployeeCreationForm = ({onToast}) => {
             zipCode: verfyWordSpaces(zipCode),
         }
 
-        const regex = /^[a-zA-Z0-9\-/]+$/        ;
+        const regex = /^[a-zA-Z0-9\-/ ]+$/;
         const valuesEmployee = Object.values(employee);
 
         valuesEmployee.map((value,index)=>{
