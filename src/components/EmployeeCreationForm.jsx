@@ -59,7 +59,7 @@ const EmployeeCreationForm = ({onToast}) => {
             zipCode: verfyWordSpaces(zipCode),
         }
 
-        const regex = /[!@#$%^&*()_+{}\\[\]:;<>,.?~\\|]/;
+        const regex = /^[a-zA-Z0-9\-/]+$/        ;
         const valuesEmployee = Object.values(employee);
 
         valuesEmployee.map((value,index)=>{
@@ -69,18 +69,18 @@ const EmployeeCreationForm = ({onToast}) => {
                     ...prevErrors,
                     [Object.keys(employee)[index]]: true,
                 }));
-                onToast(true, 'Veuillez remplir tous les champs.');
+                onToast(true, 'No empty inputs are allowed');
                 throw new Error("field(s) is empty : "+error);
             }
             
-            if(regex.test(value)){
+            if(!regex.test(value)){
                 setError(true);
                 setErrors((prevErrors) => ({
                     ...prevErrors,
                     [Object.keys(employee)[index]]: true,
                 }));
-                onToast(true, 'Il ne doit pas avoir de caractère spécials');
-                throw new Error("field(s) is empty : "+error);
+                onToast(true, 'No special characters are allowed');
+                throw new Error(" : "+error);
             }
         })
 
