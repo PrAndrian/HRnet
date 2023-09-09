@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createEmployee } from "../redux/features/employeesSlice";
 import PropTypes from 'prop-types';
+import DatePicker from "./DatePicker";
 
 const EmployeeCreationForm = ({onToast}) => {
     const [firstName, setFirstName] = useState('')
@@ -122,19 +123,17 @@ const EmployeeCreationForm = ({onToast}) => {
                 />
 
                 <label htmlFor="date-of-birth">Date of Birth</label>
-                <InputForm 
-                    id='date-of-birth' 
-                    type='date'
-                    palceholder=""
+                <DatePicker
+                    id={'date-of-birth'} 
                     setter={setBirthdate}
                     isError={errors.birthdate}
                 />
 
+                
+
                 <label htmlFor="start-date">Start Date</label>
-                <InputForm 
+                <DatePicker 
                     id='start-date' 
-                    type='date' 
-                    palceholder=""
                     setter={setStartDate}
                     isError={errors.startDate}
                 />

@@ -24,9 +24,12 @@ const SelectFrom = ({id,options,setter,isError}) => {
             `}
             onChange={handleValue}
         >
-            <option>Choisir...</option>
+            <option value="">Choisir...</option>
             {options.map((option,i)=>(
-                <option key={i}>
+                <option 
+                    key={i}
+                    value={option.name}
+                >
                     {option.name}
                 </option>
             ))}

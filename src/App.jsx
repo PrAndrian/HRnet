@@ -10,6 +10,7 @@ import Error404 from './pages/Error404';
 import Layout from './components/Layout';
 import { store } from './redux/store';
 import { Provider } from 'react-redux';
+import DatePicker from './components/DatePicker';
 
 function App() {
   const router = createBrowserRouter(
@@ -23,6 +24,12 @@ function App() {
         <Route
           path="/employees"
           element={<ListEmployees />}
+          errorElement={<Error404 />}
+        />  
+
+        <Route
+          path="/datepicker"
+          element={<DatePicker />}
           errorElement={<Error404 />}
         />  
 
