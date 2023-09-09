@@ -23,29 +23,66 @@ const EmployeeCreationForm = ({onToast}) => {
 
     const [error, setError] = useState(false);
 
+    const InitialErrors = {
+        firstName: false,
+        lastName : false,
+        birthdate : false,
+        startDate : false,
+        departement: false,
+        street: false,
+        city: false,
+        state: false,
+        zipCode: false,
+    }
+    // Initialize error states for each input field
+    const [errors, setErrors] = useState(InitialErrors);
+
     const handleSubmit = (event) =>{
         event.preventDefault();
+        
+        setErrors(InitialErrors)
+
+        function verfyWordSpaces(word){
+            var regexEspaces = /\s{2,}/;
+            return regexEspaces.test(word) ? word.replace(/\s+/g, ' ') : word 
+        }
+        
         const employee = {
-            firstName: firstName,
-            lastName : lastName,
+            firstName: verfyWordSpaces(firstName),
+            lastName : verfyWordSpaces(lastName),
             birthdate : birthdate,
             startDate : startDate,
-            departement: departement,
-            street: street,
-            city: city,
-            state: state,
-            zipCode: zipCode,
+            departement: verfyWordSpaces(departement),
+            street: verfyWordSpaces(street),
+            city: verfyWordSpaces(city),
+            state: verfyWordSpaces(state),
+            zipCode: verfyWordSpaces(zipCode),
         }
 
+        const regex = /[!@#$%^&*()_+{}\\[\]:;<>,.?~\\|]/;
         const valuesEmployee = Object.values(employee);
 
-        for (const value of valuesEmployee) {
+        valuesEmployee.map((value,index)=>{
             if(value==='' || value===0){
                 setError(true);
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    [Object.keys(employee)[index]]: true,
+                }));
                 onToast(true, 'Veuillez remplir tous les champs.');
                 throw new Error("field(s) is empty : "+error);
             }
-        }
+            
+            if(regex.test(value)){
+                setError(true);
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    [Object.keys(employee)[index]]: true,
+                }));
+                onToast(true, 'Il ne doit pas avoir de caractère spécials');
+                throw new Error("field(s) is empty : "+error);
+            }
+        })
 
         dispatch(createEmployee([...listEmployees,employee]));
         setError(false);
@@ -72,6 +109,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     type='text' 
                     palceholder="John"
                     setter={setFirstName}
+                    isError={errors.firstName}
                 />
 
                 <label htmlFor="last-name">Last Name</label>
@@ -80,6 +118,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     type='text' 
                     palceholder="Smith" 
                     setter={setLastName}
+                    isError={errors.lastName}
                 />
 
                 <label htmlFor="date-of-birth">Date of Birth</label>
@@ -88,6 +127,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     type='date'
                     palceholder=""
                     setter={setBirthdate}
+                    isError={errors.birthdate}
                 />
 
                 <label htmlFor="start-date">Start Date</label>
@@ -96,6 +136,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     type='date' 
                     palceholder=""
                     setter={setStartDate}
+                    isError={errors.startDate}
                 />
 
                 <label htmlFor="department">Department</label>
@@ -103,6 +144,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     id="departement"
                     options={departements}
                     setter={setDepartement}
+                    isError={errors.departement}
                 />
             </fieldset>
 
@@ -127,6 +169,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     type='text' 
                     palceholder="8530 Selby" 
                     setter={setStreet}
+                    isError={errors.street}
                 />
 
                 <label htmlFor="city">City</label>
@@ -135,6 +178,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     type='text'
                     palceholder="St.Coachella" 
                     setter={setCity}
+                    isError={errors.city}
                 />
 
                 <label htmlFor="state">State</label>
@@ -142,6 +186,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     id="state"
                     options={states}
                     setter={setState}
+                    isError={errors.state}
                 />
 
                 <label htmlFor="zip-code">Zip Code</label>
@@ -150,6 +195,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     type='number'
                     palceholder="92236" 
                     setter={setZipCode}
+                    isError={errors.zipCode}
                 />
             </fieldset>
         </div>
