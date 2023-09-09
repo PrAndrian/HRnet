@@ -34,7 +34,7 @@ const ListEmployees = () => {
       return;
     }
 
-    const filteredResults = currentItems.filter((employee) =>{
+    const filteredResults = listEmployees.filter((employee) =>{
       return Object.values(employee).some((value) =>
         value.toLowerCase().includes(searchTerm.toLowerCase())
       );

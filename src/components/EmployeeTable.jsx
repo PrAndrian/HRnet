@@ -7,23 +7,23 @@ const EmployeeTable = ({listEmployees}) => {
     const columns = [
         { label: "First Name", value: "firstName" },
         { label: "Last Name", value: "lastName" },
-        { label: "Date de naissance", value: "birthdate" },
-        { label: "Date de début", value: "startDate" },
-        { label: "Département", value: "departement" },
-        { label: "Rue", value: "street" },
-        { label: "Ville", value: "city" },
-        { label: "État", value: "state" },
-        { label: "Code postal", value: "zipCode" }
+        { label: "Birthday", value: "birthdate" },
+        { label: "Start Date", value: "startDate" },
+        { label: "Department", value: "departement" },
+        { label: "Street", value: "street" },
+        { label: "City", value: "city" },
+        { label: "State", value: "state" },
+        { label: "Zip Code", value: "zipCode" }
     ];
 
     const [sortColumn, setSortColumn] = useState(null);
     const [sortOrder, setSortOrder] = useState('asc');
 
-    const toggleSortOrder = () => {
-        setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    };
-
     const sortData = (data, columnIndex, order) => {
+        if(sortColumn === null){
+            setSortColumn("firstName") 
+        }
+
         return data.sort((a, b) => {
             const valueA = a[columnIndex]
             const valueB = b[columnIndex]
@@ -36,12 +36,15 @@ const EmployeeTable = ({listEmployees}) => {
         });
     };
 
-    const handleSortClick = (columnIndex) => {
+    const handleSortClick = (columnIndex,order) => {
         setSortColumn(columnIndex);
-        toggleSortOrder();
+        setSortOrder(order);
     };
 
-    const sortedData = sortColumn !== null ? sortData([...listEmployees], sortColumn, sortOrder) : listEmployees;
+
+    const sortedData = sortColumn !== null ? 
+        sortData([...listEmployees], sortColumn, sortOrder) 
+        : sortData([...listEmployees], "firstName", "asc")
 
     return (
         <table className="
@@ -67,22 +70,26 @@ const EmployeeTable = ({listEmployees}) => {
                         "
                     >
                         {column.label}
-                        <div 
-                            className="flex flex-col pl-4"
-                            onClick={() => handleSortClick(column.value)}
-                        >
-                             {sortColumn === column.label && sortOrder === 'asc' ? 
-                                <FontAwesomeIcon 
-                                    className={"w-3 h-3 cursor-pointer"} 
-                                    icon={faChevronUp} 
-                                /> 
-                            : 
-                                <FontAwesomeIcon 
-                                    className={"w-3 h-3 cursor-pointer"} 
-                                    icon={faChevronDown} 
-                                />
-                            }
-                            
+                        <div className="flex flex-col pl-4">
+                            <FontAwesomeIcon 
+                                className={`w-3 h-3 cursor-pointer 
+                                    ${ sortColumn === column.value && sortOrder==='asc'
+                                        ? "text-red" : ""
+                                    }
+                                `} 
+                                icon={faChevronUp} 
+                                onClick={() => handleSortClick(column.value,'asc')}
+                            /> 
+                        
+                            <FontAwesomeIcon 
+                                className={`w-3 h-3 cursor-pointer
+                                    ${  sortColumn === column.value && sortOrder==='desc'
+                                        ? "text-red" : ""
+                                    }
+                                `} 
+                                icon={faChevronDown}
+                                onClick={() => handleSortClick(column.value,'desc')}
+                            />     
                         </div>
                     </th>
                 ))}
