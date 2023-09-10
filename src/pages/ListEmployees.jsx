@@ -74,7 +74,7 @@ const ListEmployees = () => {
             New
           </Link>
         
-        <SearchBar onSearch={handleSearch}/>
+        <SearchBar onSearch={handleSearch} width="[300px]" height="[45px]"/>
       </div>
       
       <div className="overflow-y-hidden overflow-x-auto grow">

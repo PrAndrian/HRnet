@@ -1,5 +1,4 @@
 import InputForm from "./InputForm";
-import SelectFrom from "./SelectFrom";
 import departements from '../data/departements'
 import states from '../data/states'
 import { useState } from "react";
@@ -7,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createEmployee } from "../redux/features/employeesSlice";
 import PropTypes from 'prop-types';
 import DatePicker from "./DatePicker";
+import SelectMenu from "./SelectMenu";
 
 const EmployeeCreationForm = ({onToast}) => {
     const [firstName, setFirstName] = useState('')
@@ -139,9 +139,9 @@ const EmployeeCreationForm = ({onToast}) => {
                 />
 
                 <label htmlFor="department">Department</label>
-                <SelectFrom
-                    id="departement"
-                    options={departements}
+                <SelectMenu
+                    id={"departement"}
+                    values={departements}
                     setter={setDepartement}
                     isError={errors.departement}
                 />
@@ -181,9 +181,9 @@ const EmployeeCreationForm = ({onToast}) => {
                 />
 
                 <label htmlFor="state">State</label>
-                <SelectFrom
+                <SelectMenu
                     id="state"
-                    options={states}
+                    values={states}
                     setter={setState}
                     isError={errors.state}
                 />

@@ -29,7 +29,6 @@ const DatePicker = ({setter, isError}) => {
 }
 
 DatePicker.propTypes = {
-    palceholder : PropTypes.string.isRequired, 
     setter : PropTypes.func.isRequired, 
     isError : PropTypes.bool.isRequired, 
 }

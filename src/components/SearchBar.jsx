@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 
-const SearchBar = ({onSearch }) => {
+const SearchBar = ({onSearch,width,height}) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearchChange = (event) => {
@@ -14,7 +14,7 @@ const SearchBar = ({onSearch }) => {
     };
 
     return (
-        <div className='flex w-[360px] h-[45px]'>
+        <div className={`flex w-${width} h-${height}`}>
             <div className="
                 flex
                 items-center
@@ -52,7 +52,9 @@ const SearchBar = ({onSearch }) => {
 }
 
 SearchBar.propTypes = {
-onSearch: PropTypes.func.isRequired,
+    onSearch: PropTypes.func.isRequired,
+    width: PropTypes.string.isRequired,
+    height: PropTypes.string.isRequired,
 };
   
 
