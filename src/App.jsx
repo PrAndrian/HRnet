@@ -10,7 +10,7 @@ import Error404 from './pages/Error404';
 import Layout from './components/Layout';
 import { store } from './redux/store';
 import { Provider } from 'react-redux';
-import SelectMenu from './components/SelectMenu';
+import TestPicker from './components/TestPicker';
 
 function App() {
   const router = createBrowserRouter(
@@ -29,7 +29,7 @@ function App() {
 
         <Route
           path="/test"
-          element={<SelectMenu />}
+          element={<TestPicker minYear={1900} substractionYears={0}/>}
           errorElement={<Error404 />}
         />  
 

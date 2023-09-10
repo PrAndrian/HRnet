@@ -1,261 +1,142 @@
-const TestPicker = () => {
-  return (
-    <main>
-        <div className="w-fit">
-            <span className="
-                flex
-                items-center
-                rounded-lg
-                border
-                border-[#414A3D] 
-                border-opacity-40
-                px-4 
-                py-2 
-                bg-tertiary
-            ">
-                DD/MM/YYYY
-            </span>
-            <div className="max-w-sm w-full shadow-lg">
-                <div className="md:p-8 p-5 dark:bg-gray-800 bg-tertiary rounded-t">
-                    <div className="px-4 flex items-center justify-between">
-                        <span  tabIndex="0" className="focus:outline-none  text-base font-bold dark:text-gray-100 text-gray-800">October 2020</span>
-                        <div className="flex items-center">
-                            <button aria-label="calendar backward" className="focus:text-gray-400 hover:text-gray-400 text-gray-800 dark:text-gray-100">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <polyline points="15 6 9 12 15 18" />
-                            </svg>
-                        </button>
-                        <button aria-label="calendar forward" className="focus:text-gray-400 hover:text-gray-400 ml-3 text-gray-800 dark:text-gray-100"> 
-                            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler  icon-tabler-chevron-right" width="24" height="24" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <polyline points="9 6 15 12 9 18" />
-                            </svg>
-                        </button>
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-                        </div>
-                    </div>
-                    <div className="flex items-center justify-between pt-12 overflow-x-auto">
-                        <table className="w-full">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800 dark:text-gray-100">Mo</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800 dark:text-gray-100">Tu</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800 dark:text-gray-100">We</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800 dark:text-gray-100">Th</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800 dark:text-gray-100">Fr</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800 dark:text-gray-100">Sa</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800 dark:text-gray-100">Su</p>
-                                        </div>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center"></div>
-                                    </td>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center"></div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center"></div>
-                                    </td>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">1</p>
-                                        </div>
-                                    </td>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">2</p>
-                                        </div>
-                                    </td>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100">3</p>
-                                        </div>
-                                    </td>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100">4</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">5</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">6</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">7</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="w-full h-full">
-                                            <div className="flex items-center justify-center w-full rounded-full cursor-pointer">
-                                                <a  role="link" tabIndex="0" className="focus:outline-none  focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 focus:bg-indigo-500 hover:bg-indigo-500 text-base w-8 h-8 flex items-center justify-center font-medium text-white bg-indigo-700 rounded-full">8</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">9</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100">10</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100">11</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">12</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">13</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">14</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">15</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">16</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100">17</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100">18</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">19</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">20</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">21</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">22</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">23</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100">24</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100">25</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">26</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">27</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">28</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">29</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 dark:text-gray-100 font-medium">30</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+const DatePicker = ({ minYear, substractionYears }) => {
+  // Validate minYear and maxYear to ensure they are within a reasonable range
+  substractionYears = new Date().getFullYear() - substractionYears; // Maximum year set to the current year if it's above that
+
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear()); // Initialize with the current year
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // Initialize with the current month (0-indexed)
+
+  const handleDateClick = (date) => {
+    setSelectedDate(date);
+  };
+
+  const handleYearChange = (event) => {
+    setSelectedYear(parseInt(event.target.value, 10));
+  };
+
+  const handleMonthChange = (event) => {
+    setSelectedMonth(parseInt(event.target.value, 10));
+  };
+
+  const formatSelectedDate = () => {
+    if (selectedDate) {
+      const day = selectedDate.getDate().toString().padStart(2, '0');
+      const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+      const year = selectedDate.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+    return 'No date selected';
+  };
+
+  const renderYearDropdown = () => {
+    const years = [];
+
+    // Generate a range of years within the specified minimum and maximum
+    for (let year = minYear; year <= substractionYears; year++) {
+      years.push(
+        <option key={year} value={year}>
+          {year}
+        </option>
+      );
+    }
+
+    return (
+      <select
+        className="block w-1/4 p-2 bg-gray-200 border border-gray-300 rounded-md"
+        onChange={handleYearChange}
+        value={selectedYear}
+      >
+        {years}
+      </select>
+    );
+  };
+
+  const renderMonthDropdown = () => {
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+
+    return (
+      <select
+        className="block w-1/4 p-2 bg-gray-200 border border-gray-300 rounded-md"
+        onChange={handleMonthChange}
+        value={selectedMonth}
+      >
+        {months.map((month, index) => (
+          <option key={month} value={index}>
+            {month}
+          </option>
+        ))}
+      </select>
+    );
+  };
+
+  const renderCalendarDays = () => {
+    const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
+
+    const calendarDays = [];
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const firstDayOfMonth = new Date(selectedYear, selectedMonth, 1).getDay();
+
+    for (let i = 0; i < firstDayOfMonth; i++) {
+      calendarDays.push(
+        <div key={`empty-${i}`} className="empty-day w-10 h-10"></div>
+      );
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      calendarDays.push(
+        <div
+          key={day}
+          onClick={() => handleDateClick(new Date(selectedYear, selectedMonth, day))}
+          className="calendar-day w-10 h-10 cursor-pointer hover:bg-gray-200"
+        >
+          {day}
         </div>
-    </main>
-  )
-}
+      );
+    }
 
-export default TestPicker
+    return (
+      <div className="grid grid-cols-7 gap-1">
+        {dayNames.map((dayName) => (
+          <div key={dayName} className="day-name w-10 h-10">
+            {dayName}
+          </div>
+        ))}
+        {calendarDays}
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    setSelectedDate(new Date(selectedYear, selectedMonth, 1));
+  }, [selectedYear, selectedMonth]);
+
+  return (
+    <div className="container mx-auto my-4 p-4 bg-white shadow-lg rounded-lg">
+      <div className="flex items-center justify-center mb-4">
+        <div className="mr-2">Select Year:</div>
+        {renderYearDropdown()}
+        <div className="mx-2">Select Month:</div>
+        {renderMonthDropdown()}
+      </div>
+      <div className="text-center text-xl font-semibold mb-2">
+        Selected Date: {formatSelectedDate()}
+      </div>
+      <div className="p-2">
+        {renderCalendarDays()}
+      </div>
+    </div>
+  );
+};
+
+DatePicker.propTypes = {
+  minYear: PropTypes.number, // Minimum selectable year
+  substractionYears: PropTypes.number, // Maximum selectable year
+};
+
+export default DatePicker;
