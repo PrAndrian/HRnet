@@ -10,7 +10,6 @@ import Error404 from './pages/Error404';
 import Layout from './components/Layout';
 import { store } from './redux/store';
 import { Provider } from 'react-redux';
-import TestPicker from './components/TestPicker';
 
 function App() {
   const router = createBrowserRouter(
@@ -25,13 +24,7 @@ function App() {
           path="/employees"
           element={<ListEmployees />}
           errorElement={<Error404 />}
-        />  
-
-        <Route
-          path="/test"
-          element={<TestPicker minYear={1900} substractionYears={0}/>}
-          errorElement={<Error404 />}
-        />  
+        />
 
         <Route path="/*" element={<Error404 />} />
       </Route>,

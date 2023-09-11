@@ -125,6 +125,9 @@ const EmployeeCreationForm = ({onToast}) => {
                 <label htmlFor="date-of-birth">Date of Birth</label>
                 <DatePicker
                     id={'date-of-birth'} 
+                    minYear={1950}
+                    substractionYears={18}
+                    zIndex={"20"}
                     setter={setBirthdate}
                     isError={errors.birthdate}
                 />
@@ -134,6 +137,9 @@ const EmployeeCreationForm = ({onToast}) => {
                 <label htmlFor="start-date">Start Date</label>
                 <DatePicker 
                     id='start-date' 
+                    minYear={2000}
+                    substractionYears={-5}
+                    zIndex={"10"}
                     setter={setStartDate}
                     isError={errors.startDate}
                 />

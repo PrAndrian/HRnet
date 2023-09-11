@@ -1,11 +1,10 @@
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import PropTypes from 'prop-types';
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import SearchBar from "./SearchBar"
 
 const SelectMenu = ({id,values,setter, isError}) => {
-  console.log(id)
   const [options, setOptions] = useState(values)
   const [inputValue, setInputValue] = useState("")
   const [visibility, setVisibility] = useState(false)
@@ -13,6 +12,7 @@ const SelectMenu = ({id,values,setter, isError}) => {
   const handleClickValue = (e) => {
     setInputValue(e.target.getAttribute("value"))
     setter(e.target.getAttribute("value"))
+    setVisibility(false);
   }
 
   const handleToggle = (e) =>{
@@ -36,6 +36,22 @@ const SelectMenu = ({id,values,setter, isError}) => {
     });
     setOptions(filteredResults);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (visibility && !event.target.closest('.relative')) {
+        // Clicked outside the dropdown, so close it
+        setVisibility(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      // Cleanup the event listener when the component unmounts
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [visibility]);
 
   return (
     <div className="w-[370px] relative">
