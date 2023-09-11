@@ -8,7 +8,7 @@ const DatePicker = ({ id,minYear, substractionYears,zIndex,isError,setter }) => 
   substractionYears = new Date().getFullYear() - substractionYears; // Maximum year set to the current year if it's above that
 
   const [selectedDate,setSelectedDate] = useState("Choose...")
-  const [selectedYear, setSelectedYear] = useState(minYear); // Initialize with the current year
+  const [selectedYear, setSelectedYear] = useState(substractionYears); // Initialize with the current year
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // Initialize with the current month (0-indexed)
   const [visible,setVisible] = useState(false)
 
@@ -146,7 +146,7 @@ const DatePicker = ({ id,minYear, substractionYears,zIndex,isError,setter }) => 
           border-[#414A3D] 
           border-opacity-40 
           rounded-lg
-          ${isError ? 'border-red' : 'border-[#414A3D]'}
+          ${isError ? "border border-4 border-red" : ""}
         `}
         
         onClick={()=>setVisible(!visible)}
@@ -155,11 +155,11 @@ const DatePicker = ({ id,minYear, substractionYears,zIndex,isError,setter }) => 
         <FontAwesomeIcon icon={faCalendar}/>    
       </span>
       {visible &&      
-        <div className="container mt-2 px-4 pt-2 bg-white shadow-lg rounded-lg absolute max-h-fit">
-          <div className="flex items-center justify-center mb-4">
-            <div className="mr-2">Year:</div>
+        <div className="container mt-2 px-4 pt-2 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg absolute max-h-fit">
+          <div className="flex items-center justify-between mb-4">
+            <div>Year:</div>
             {renderYearDropdown()}
-            <div className="mx-2">Month:</div>
+            <div>Month:</div>
             {renderMonthDropdown()}
             </div>
             <div className="p-2">
