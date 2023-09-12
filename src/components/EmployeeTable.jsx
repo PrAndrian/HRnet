@@ -95,8 +95,10 @@ const EmployeeTable = ({listEmployees}) => {
                 ))}
                 </tr>
             </thead>
-            <tbody 
-                >
+            <tbody>
+                { sortedData.length === 0 &&
+                    <span className="w-full my-20 text-xl font-bold flex justify-center items-center">No employees</span>
+                }
                 {sortedData.map((employee, index) =>(
                 <tr 
                     key={index}
