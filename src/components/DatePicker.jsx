@@ -19,6 +19,11 @@ const DatePicker = ({ id,minYear, substractionYears,zIndex,isError,setter }) => 
     setVisible(false);
   };
 
+  const handleClick = (e)=>{
+    e.preventDefault()
+    setVisible(!visible)
+  }
+
   const handleYearChange = (event) => {
     setSelectedYear(parseInt(event.target.value, 10));
   };
@@ -132,8 +137,8 @@ const DatePicker = ({ id,minYear, substractionYears,zIndex,isError,setter }) => 
   }, [visible]);
 
   return (
-    <div id={id} className={`w-[370px] relative z-${zIndex}`}>
-      <span className={`
+    <div id={id} className={`w-[370px] relative ${zIndex}`}>
+      <button className={`
           font-semibold
           flex
           items-center
@@ -149,11 +154,11 @@ const DatePicker = ({ id,minYear, substractionYears,zIndex,isError,setter }) => 
           ${isError ? "border border-4 border-red" : ""}
         `}
         
-        onClick={()=>setVisible(!visible)}
+        onClick={handleClick}
       > 
         {selectedDate}
         <FontAwesomeIcon icon={faCalendar}/>    
-      </span>
+      </button>
       {visible &&      
         <div className="container mt-2 px-4 pt-2 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg absolute max-h-fit">
           <div className="flex items-center justify-between mb-4">

@@ -127,7 +127,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     id={'date-of-birth'} 
                     minYear={1950}
                     substractionYears={18}
-                    zIndex={"20"}
+                    zIndex={"z-30"}
                     setter={setBirthdate}
                     isError={errors.birthdate}
                 />
@@ -139,7 +139,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     id='start-date' 
                     minYear={2000}
                     substractionYears={-5}
-                    zIndex={"10"}
+                    zIndex={"z-20"}
                     setter={setStartDate}
                     isError={errors.startDate}
                 />
