@@ -60,7 +60,7 @@ const EmployeeCreationForm = ({onToast}) => {
             zipCode: verfyWordSpaces(zipCode),
         }
 
-        const regex = /^[a-zA-Z0-9\-/ ]+$/;
+        const regex = /^[a-zA-Z0-9\-/ éèàùêâô]+$/;
         const valuesEmployee = Object.values(employee);
 
         valuesEmployee.map((value,index)=>{
@@ -96,7 +96,7 @@ const EmployeeCreationForm = ({onToast}) => {
         id="create-employee"
         className="flex flex-col grow justify-center items-center p-5"
     >
-        <div className="flex justify-center gap-40 mb-[50px] w-full" >
+        <div className="flex justify-center flex-wrap gap-10 md:gap-40 mb-[50px] w-full" >
             <fieldset className="
                 flex 
                 flex-col 
@@ -117,7 +117,7 @@ const EmployeeCreationForm = ({onToast}) => {
                 <InputForm 
                     id='last-name' 
                     type='text' 
-                    palceholder="Smith" 
+                    palceholder="mdith" 
                     setter={setLastName}
                     isError={errors.lastName}
                 />
@@ -158,8 +158,8 @@ const EmployeeCreationForm = ({onToast}) => {
                 flex-col 
                 w-full 
                 max-w-[375px] 
-                border 
-                border-[#414A3D] 
+                md:border 
+                md:border-[#414A3D] 
                 rounded-xl
                 pt-[15px]
                 px-[30px]

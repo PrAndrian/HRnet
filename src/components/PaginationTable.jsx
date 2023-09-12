@@ -46,11 +46,7 @@ const PaginationTable = ({ totalItems, itemsPerPage, currentPage, onPageChange }
           </button>
         </li>
         {renderPageNumbers()}
-        <li
-          className={`rounded-md ${
-            currentPage == totalPages ? 'invisible' : ''
-          }`}
-        >
+        <li className={`rounded-md ${ currentPage == totalPages+1 || currentPage == totalPages  ? 'invisible' : ''}`}>
           <button
             className="px-2 py-1 rounded-md hover:bg-tertiary focus:outline-none"
             onClick={() => handlePageChange(currentPage + 1)}

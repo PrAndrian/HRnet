@@ -22,7 +22,7 @@ const Home = () => {
 
   return (
     <>
-      <h1 className="text-secondary text-[40px] w-[260px]">
+      <h1 className="text-secondary text-[40px] w-[260px] p-5 md:p-5">
         Create New Employee
       </h1>
       <ToastModal showToast={showToast} message={toastMessage} error={error}/>
