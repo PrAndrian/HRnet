@@ -19,6 +19,19 @@ const ListEmployees = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
+    // Définition des colonnes du tableau
+    const columns = [
+      { label: "First Name", value: "firstName" },
+      { label: "Last Name", value: "lastName" },
+      { label: "Birthday", value: "birthdate" },
+      { label: "Start Date", value: "startDate" },
+      { label: "Department", value: "departement" },
+      { label: "Street", value: "street" },
+      { label: "City", value: "city" },
+      { label: "State", value: "state" },
+      { label: "Zip Code", value: "zipCode" }
+  ];
+
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -74,14 +87,24 @@ const ListEmployees = () => {
             New
           </Link>
         
-        <SearchBar onSearch={handleSearch} width="[300px]" height="[45px]"/>
+        <SearchBar 
+          onSearch={handleSearch} 
+          width="[300px]" 
+          height="[45px]"
+          placeHolder={'Search'}
+          borderColor={'#414A3D'}
+          backgroundColor={'transparent'}
+        />
       </div>
       
       <div className="overflow-y-hidden overflow-x-auto grow">
         <EmployeeTable 
+          headColumns={columns}
           listEmployees={
             currentItems.slice(indexOfFirstItem, indexOfLastItem)
           }
+          headerBgColor={'tertiary'} 
+          sortedColumnColor ={'secondary'}
         />
       </div>
 
@@ -98,12 +121,26 @@ const ListEmployees = () => {
         <ShowingRowTable
           itemsPerPage={itemsPerPage}
           onItemsPerPageChange={handleItemsPerPageChange}
+          totalItems={listEmployees.length}
+          indexOfFirstItem={indexOfFirstItem}
+          indexOfLastItem={indexOfLastItem}
+          height={'[40px]'}
+          labelColor="[#414A3D]" // Couleur de l'étiquette "Show"
+          selectBorderColor={'[#414A3D]'} // Couleur de la bordure du select
+          selectBackgroundColor="transparent" // Couleur de fond du select
+          selectTextColor="[#414A3D]" // Couleur du texte du select
+          selectCursor="[#414A3D]" // Type de curseur pour le select
+          spanTextColor="[#414A3D]" // Couleur du texte dans la balise <span>
         />
         <PaginationTable
           totalItems={currentItems.length}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
           onPageChange={handlePageChange}
+          activeButtonColor={'tertiary'} // Couleur du bouton actif
+          hoverButtonColor={'tertiary'} // Couleur du bouton en survol
+          width="[370px]"
+          height="[45px]"
         />
       </footer>
     </>

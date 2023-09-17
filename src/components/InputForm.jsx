@@ -14,13 +14,11 @@ const InputForm = ({id,type,palceholder,setter, isError}) => {
             className={`
                 rounded-lg
                 border
-                border-[#414A3D] 
-                border-opacity-40 
                 bg-transparent
                 h-[40px]
                 p-2
                 font-bold
-                ${isError ? "border border-4 border-red" : ""}
+                ${isError ? "border-4 border-red" : "border-[#ccc] "}
             `}
             onChange={handleValue}
             placeholder={palceholder}

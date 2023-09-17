@@ -130,6 +130,9 @@ const EmployeeCreationForm = ({onToast}) => {
                     zIndex={"z-30"}
                     setter={setBirthdate}
                     isError={errors.birthdate}
+                    textColor={'#414A3D'}
+                    width={'[370px]'}
+                    height={'[45px]'}
                 />
 
                 
@@ -142,6 +145,9 @@ const EmployeeCreationForm = ({onToast}) => {
                     zIndex={"z-20"}
                     setter={setStartDate}
                     isError={errors.startDate}
+                    textColor={'#414A3D'}
+                    width={'[370px]'}
+                    height={'[45px]'}
                 />
 
                 <label htmlFor="department">Department</label>

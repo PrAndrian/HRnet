@@ -1,10 +1,18 @@
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import PropTypes from 'prop-types';
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import SearchBar from "./SearchBar"
 
-const SelectMenu = ({id,values,setter, isError}) => {
+const SelectMenu = ({
+  id,
+  values,
+  setter,
+  isError,
+  width,
+  backgroundColor,
+  textColor,
+  }) => {
   const [options, setOptions] = useState(values)
   const [inputValue, setInputValue] = useState("")
   const [visibility, setVisibility] = useState(false)
@@ -37,24 +45,8 @@ const SelectMenu = ({id,values,setter, isError}) => {
     setOptions(filteredResults);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (visibility && !event.target.closest('.relative')) {
-        // Clicked outside the dropdown, so close it
-        setVisibility(false);
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
-
-    return () => {
-      // Cleanup the event listener when the component unmounts
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [visibility]);
-
   return (
-    <div className="w-[370px] relative">
+    <div className={`w-${width} relative`}>
       <input id={id} name={id} type="hidden" value={inputValue}/>
       <button 
         className={`
@@ -62,38 +54,39 @@ const SelectMenu = ({id,values,setter, isError}) => {
           flex
           items-center
           justify-between
-          h-[45px]
-          w-full
           p-2
           mb-2
           bg-transparent
           border
-          border-[#414A3D] 
-          border-opacity-40 
           rounded-lg
-          ${isError ? 'border-red' : 'border-[#414A3D]'}
+          w-${width}
+          ${isError ? 'border-4 border-red' : `border-[#ccc]`}
         `}
+        style={{ backgroundColor, color: textColor }}
         onClick={handleToggle}
       >
           <span>{inputValue === "" ? "Choose..." : inputValue}</span>
           <FontAwesomeIcon className={`w-3 h-3 ${visibility ? 'rotate-180': ''}`} icon={faChevronDown}/>    
       </button>
       {visibility &&
-        <div className="
-          absolute
-          w-full
-          bg-white
-          border
-          border-[#414A3D] 
-          border-opacity-40 
-          rounded-lg
-          shadow-[0_3px_10px_rgb(0,0,0,0.2)]
-        ">
+        <div className={`
+            w-${width}
+            absolute
+            bg-white
+            border
+            rounded-lg
+            shadow-[0_3px_10px_rgb(0,0,0,0.2)]
+          `}
+          style={{ width }}
+        >
           <div className="p-2">
             <SearchBar 
               onSearch={handleSearch}
-              width="full" 
+              width={width} 
               height="[45px]" 
+              placeHolder={'Search'}
+              borderColor={'#414A3D'}
+              backgroundColor={'transparent'}
             />
           </div>
           <ul className="mt-1 px-2 max-h-[200px] overflow-y-auto pb-2 ">
@@ -126,9 +119,21 @@ const SelectMenu = ({id,values,setter, isError}) => {
 
 SelectMenu.propTypes = {
   id: PropTypes.string.isRequired,
-  setter : PropTypes.func.isRequired,
-  isError : PropTypes.bool.isRequired,
-  values : PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string || PropTypes.number)).isRequired
-}
+  setter: PropTypes.func.isRequired,
+  isError: PropTypes.bool.isRequired,
+  values: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string || PropTypes.number)).isRequired,
+  width: PropTypes.string, // Largeur personnalisée
+  height: PropTypes.string, // Hauteur personnalisée
+  backgroundColor: PropTypes.string, // Couleur de fond personnalisée
+  textColor: PropTypes.string, // Couleur du texte personnalisée
+  borderColor: PropTypes.string, // Couleur de la bordure personnalisée
+};
+
+// Définir les valeurs par défaut pour les nouvelles props
+SelectMenu.defaultProps = {
+  width: 'full', // Largeur par défaut
+  backgroundColor: 'transparent', // Couleur de fond par défaut
+  textColor: '#000', // Couleur du texte par défaut
+};
 
 export default SelectMenu

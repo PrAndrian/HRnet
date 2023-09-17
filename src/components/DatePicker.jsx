@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 
-const DatePicker = ({ id,minYear, substractionYears,zIndex,isError,setter }) => {
+const DatePicker = ({ id,minYear, substractionYears,zIndex,isError,setter,backgroundColor,backgroundColorDropdown, textColor, borderColor, width,height }) => {
   // Validate minYear and maxYear to ensure they are within a reasonable range
   substractionYears = new Date().getFullYear() - substractionYears; // Maximum year set to the current year if it's above that
 
@@ -53,7 +53,7 @@ const DatePicker = ({ id,minYear, substractionYears,zIndex,isError,setter }) => 
 
     return (
       <select
-        className="block w-1/4 p-2 bg-gray-200 border border-gray-300 rounded-md"
+        className="block w-1/2 p-2 bg-gray-200 border border-gray-300 rounded-md"
         onChange={handleYearChange}
         value={selectedYear}
       >
@@ -70,7 +70,7 @@ const DatePicker = ({ id,minYear, substractionYears,zIndex,isError,setter }) => 
 
     return (
       <select
-        className="block w-1/4 p-2 bg-gray-200 border border-gray-300 rounded-md"
+        className="block w-1/2 p-2 bg-gray-200 border border-gray-300 rounded-md"
         onChange={handleMonthChange}
         value={selectedMonth}
       >
@@ -120,70 +120,65 @@ const DatePicker = ({ id,minYear, substractionYears,zIndex,isError,setter }) => 
     );
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (visible && !event.target.closest('.relative')) {
-        // Clicked outside the dropdown, so close it
-        setVisible(false);
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
-
-    return () => {
-      // Cleanup the event listener when the component unmounts
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [visible]);
-
   return (
-    <div id={id} className={`w-[370px] relative ${zIndex}`}>
+    <div id={id} className={`w-${width} relative ${zIndex}`}>
       <button className={`
           font-semibold
           flex
           items-center
           justify-between
-          h-[45px]
+          h-${height}
           w-full
           p-2
           bg-transparent
-          border
-          border-[#414A3D] 
-          border-opacity-40 
+          border  
           rounded-lg
-          ${isError ? "border border-4 border-red" : ""}
+          ${isError ? "border-4 border-red" : `border-[#ccc]`}
         `}
-        
+        style={{ backgroundColor, color: textColor }}
         onClick={handleClick}
       > 
         {selectedDate}
         <FontAwesomeIcon icon={faCalendar}/>    
       </button>
       {visible &&      
-        <div className="container mt-2 px-4 pt-2 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg absolute max-h-fit">
-          <div className="flex items-center justify-between mb-4">
-            <div>Year:</div>
+        <div
+          style={{ color: textColor }} 
+          className={`container border border-${borderColor} mt-2 px-4 pt-2 bg-${backgroundColorDropdown} shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg absolute max-h-fit`}>
+          <div className="flex items-center justify-between gap-2 mb-4">
             {renderYearDropdown()}
-            <div>Month:</div>
             {renderMonthDropdown()}
-            </div>
-            <div className="p-2">
-              {renderCalendarDays()}
-            </div>
+          </div>
+          <div>
+            {renderCalendarDays()}
+          </div>
         </div>
       }
     </div>
   );
+  
 };
 
 DatePicker.propTypes = {
   id: PropTypes.string.isRequired,
-  minYear: PropTypes.number, // Minimum selectable year
-  substractionYears: PropTypes.number, // Maximum selectable year
-  zIndex: PropTypes.string.isRequired, // z-inddex
-  isError : PropTypes.bool.isRequired,
-  setter : PropTypes.func.isRequired, 
-
+  minYear: PropTypes.number,
+  substractionYears: PropTypes.number,
+  zIndex: PropTypes.string.isRequired,
+  isError: PropTypes.bool.isRequired,
+  setter: PropTypes.func.isRequired,
+  backgroundColor: PropTypes.string, // Nouvelle prop pour la couleur de fond
+  backgroundColorDropdown: PropTypes.string,
+  textColor: PropTypes.string, // Nouvelle prop pour la couleur du texte
+  borderColor: PropTypes.string, // Nouvelle prop pour la couleur de la bordure
+  width: PropTypes.string, // Nouvelle prop pour la couleur de la bordure
+  height: PropTypes.string, // Nouvelle prop pour la couleur de la bordure
 };
 
+// Définition des valeurs par défaut pour les nouvelles props
+DatePicker.defaultProps = {
+  backgroundColor: 'transparent', // Par défaut, la couleur de fond est transparente
+  textColor: '#000', // Par défaut, la couleur du texte est noire
+  borderColor: '#ccc', // Par défaut, la couleur de la bordure est grise
+  backgroundColorDropdown: 'white', // Par défaut, la couleur de la bordure est grise
+};
 export default DatePicker;
