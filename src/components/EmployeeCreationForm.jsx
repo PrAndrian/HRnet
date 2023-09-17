@@ -17,7 +17,7 @@ const EmployeeCreationForm = ({onToast}) => {
     const [street, setStreet] = useState('')
     const [city, setCity] = useState('')
     const [state, setState] = useState('')
-    const [zipCode, setZipCode] = useState(0)
+    const [zipCode, setZipCode] = useState('')
 
     const dispatch = useDispatch()
     const listEmployees = useSelector((state)=>state.employees.list)
@@ -87,6 +87,15 @@ const EmployeeCreationForm = ({onToast}) => {
 
         dispatch(createEmployee([...listEmployees,employee]));
         setError(false);
+        setFirstName('')
+        setLastName('')
+        setBirthdate('')
+        setStartDate('')
+        setDepartement('')
+        setStreet('')
+        setCity('')
+        setState('')
+        setZipCode('')
         onToast(false, 'Employé ajouté avec succès !')
     }
 
@@ -111,15 +120,17 @@ const EmployeeCreationForm = ({onToast}) => {
                     palceholder="John"
                     setter={setFirstName}
                     isError={errors.firstName}
+                    value={firstName}
                 />
 
                 <label htmlFor="last-name">Last Name</label>
                 <InputForm 
                     id='last-name' 
                     type='text' 
-                    palceholder="mdith" 
+                    palceholder="Doe" 
                     setter={setLastName}
                     isError={errors.lastName}
+                    value={lastName}
                 />
 
                 <label htmlFor="date-of-birth">Date of Birth</label>
@@ -133,6 +144,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     textColor={'#414A3D'}
                     width={'[370px]'}
                     height={'[45px]'}
+                    selectedDate={birthdate}
                 />
 
                 
@@ -148,6 +160,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     textColor={'#414A3D'}
                     width={'[370px]'}
                     height={'[45px]'}
+                    selectedDate={startDate}
                 />
 
                 <label htmlFor="department">Department</label>
@@ -156,6 +169,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     values={departements}
                     setter={setDepartement}
                     isError={errors.departement}
+                    inputValue={departement}
                 />
             </fieldset>
 
@@ -181,6 +195,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     palceholder="8530 Selby" 
                     setter={setStreet}
                     isError={errors.street}
+                    value={street}
                 />
 
                 <label htmlFor="city">City</label>
@@ -190,6 +205,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     palceholder="St.Coachella" 
                     setter={setCity}
                     isError={errors.city}
+                    value={city}
                 />
 
                 <label htmlFor="state">State</label>
@@ -198,6 +214,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     values={states}
                     setter={setState}
                     isError={errors.state}
+                    inputValue={state}
                 />
 
                 <label htmlFor="zip-code">Zip Code</label>
@@ -207,6 +224,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     palceholder="92236" 
                     setter={setZipCode}
                     isError={errors.zipCode}
+                    value={zipCode}
                 />
             </fieldset>
         </div>

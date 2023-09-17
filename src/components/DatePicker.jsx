@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 
-const DatePicker = ({ id,minYear, substractionYears,zIndex,isError,setter,backgroundColor,backgroundColorDropdown, textColor, borderColor, width,height }) => {
+const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,setter,backgroundColor,backgroundColorDropdown, textColor, borderColor, width,height }) => {
   // Validate minYear and maxYear to ensure they are within a reasonable range
   substractionYears = new Date().getFullYear() - substractionYears; // Maximum year set to the current year if it's above that
 
-  const [selectedDate,setSelectedDate] = useState("Choose...")
+  // const [selectedDate,setSelectedDate] = useState("")
   const [selectedYear, setSelectedYear] = useState(substractionYears); // Initialize with the current year
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // Initialize with the current month (0-indexed)
   const [visible,setVisible] = useState(false)
 
   const handleDateClick = (date) => {
     const formatedDate = formatSelectedDate(date)
-    setSelectedDate(formatedDate)
+    // setSelectedDate(formatedDate)
     setter(formatedDate)
     setVisible(false);
   };
@@ -138,7 +138,7 @@ const DatePicker = ({ id,minYear, substractionYears,zIndex,isError,setter,backgr
         style={{ backgroundColor, color: textColor }}
         onClick={handleClick}
       > 
-        {selectedDate}
+        {selectedDate === "" ? "Choose..." : selectedDate }
         <FontAwesomeIcon icon={faCalendar}/>    
       </button>
       {visible &&      
@@ -161,6 +161,7 @@ const DatePicker = ({ id,minYear, substractionYears,zIndex,isError,setter,backgr
 
 DatePicker.propTypes = {
   id: PropTypes.string.isRequired,
+  selectedDate: PropTypes.string.isRequired,
   minYear: PropTypes.number,
   substractionYears: PropTypes.number,
   zIndex: PropTypes.string.isRequired,

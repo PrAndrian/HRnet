@@ -12,13 +12,15 @@ const SelectMenu = ({
   width,
   backgroundColor,
   textColor,
+  inputValue,
   }) => {
+  console.log(inputValue)
   const [options, setOptions] = useState(values)
-  const [inputValue, setInputValue] = useState("")
+  // const [inputValue, setInputValue] = useState("")
   const [visibility, setVisibility] = useState(false)
 
   const handleClickValue = (e) => {
-    setInputValue(e.target.getAttribute("value"))
+    // setInputValue(e.target.getAttribute("value"))
     setter(e.target.getAttribute("value"))
     setVisibility(false);
   }
@@ -119,6 +121,7 @@ const SelectMenu = ({
 
 SelectMenu.propTypes = {
   id: PropTypes.string.isRequired,
+  inputValue: PropTypes.string.isRequired,
   setter: PropTypes.func.isRequired,
   isError: PropTypes.bool.isRequired,
   values: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string || PropTypes.number)).isRequired,

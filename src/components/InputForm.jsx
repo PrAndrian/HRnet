@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const InputForm = ({id,type,palceholder,setter, isError}) => {
+const InputForm = ({id,type,palceholder,setter, isError,value}) => {
 
     const handleValue = (event) => {
         event.preventDefault();
@@ -22,6 +22,7 @@ const InputForm = ({id,type,palceholder,setter, isError}) => {
             `}
             onChange={handleValue}
             placeholder={palceholder}
+            value={value}
         />
     )
 }
@@ -29,6 +30,7 @@ const InputForm = ({id,type,palceholder,setter, isError}) => {
 InputForm.propTypes = {
     id : PropTypes.string.isRequired, 
     type : PropTypes.string.isRequired,
+    value : PropTypes.string.isRequired,
     palceholder : PropTypes.string.isRequired, 
     setter : PropTypes.func.isRequired, 
     isError : PropTypes.bool.isRequired, 

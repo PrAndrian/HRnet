@@ -8,13 +8,15 @@ import { useSelector } from "react-redux";
 import ShowingRowTable from "../components/ShowingRowTable";
 import PaginationTable from "../components/PaginationTable";
 import { useState } from "react";
+// import employees from "../data/employeeMock"
 
 const ListEmployees = () => {
   const listEmployees = useSelector((state) => state.employees.list) 
+  // const listEmployees = employees
 
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentItems, setSearchResults] = useState(listEmployees);
+  const [currentItems, setSearchResults] = useState(listEmployees); 
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -105,6 +107,8 @@ const ListEmployees = () => {
           }
           headerBgColor={'tertiary'} 
           sortedColumnColor ={'secondary'}
+          minWidth={'1440px'}
+          height={'500px'}
         />
       </div>
 

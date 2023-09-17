@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from 'prop-types';
 import { useState } from "react";
 
-const EmployeeTable = ({ headColumns,listEmployees,width,height, headerBgColor, sortedColumnColor }) => {
+const EmployeeTable = ({ headColumns,listEmployees,minWidth,height, headerBgColor, sortedColumnColor }) => {
 
     // État pour le tri
     const [sortColumn, setSortColumn] = useState(null);
@@ -43,12 +43,12 @@ const EmployeeTable = ({ headColumns,listEmployees,width,height, headerBgColor, 
             flex 
             flex-col 
             grow
-            w-${width}
-            lg:w-[auto]
-            h-${height}
+            lg:w-auto
             overflow-x-hidden 
             overflow-y-auto
-        `}>
+        `}
+            style={{height: height,minWidth: minWidth}}
+        >
             <thead className={`sticky top-0 bg-${headerBgColor}`}>
                 <tr className="flex h-[60px] items-center rounded-t-lg">
                     {headColumns.map((column) => (
@@ -124,13 +124,7 @@ EmployeeTable.propTypes = {
     headerBgColor: PropTypes.string, // Couleur de fond de l'en-tête
     sortedColumnColor: PropTypes.string, // Couleur de l'icône de colonne triée
     headColumns : PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-    width : PropTypes.string,
+    minWidth : PropTypes.string,
     height : PropTypes.string,
 }
-
-EmployeeTable.defaultProps = {
-    width: '[1440px]', // Largeur par défaut
-    height: '[500px]', // Largeur par défaut
-};
-
 export default EmployeeTable;
