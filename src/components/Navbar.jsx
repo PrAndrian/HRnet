@@ -46,7 +46,7 @@ const Navbar = () => {
 
       <Link to="/" >
         <div className='flex items-center mt-[119px] mb-[55px]'>
-          <img className="w-[40px] h-[40px]" src={Logo}/>
+          <img className="w-[40px] h-[40px]" src={Logo} alt='Logo HRnet'/>
           <span className='hidden md:block text-[40px] text-[#596F06]'>HRnet</span>
         </div>
       </Link>
