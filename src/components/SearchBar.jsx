@@ -2,8 +2,19 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import '../index.css'
 
-const SearchBar = ({ onSearch, width, height, placeHolder,iconColor, borderColor, placeholderColor, backgroundColor }) => {
+const SearchBar = ({ 
+    id={id},
+    onSearch, 
+    width, 
+    height, 
+    placeHolder,
+    iconColor, 
+    borderColor, 
+    backgroundColor,
+    inputTextColor,
+}) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearchChange = (event) => {
@@ -13,7 +24,10 @@ const SearchBar = ({ onSearch, width, height, placeHolder,iconColor, borderColor
     };
 
     return (
-        <div className={`flex w-${width} h-${height}`}>
+        <div 
+            className={`flex`} 
+            style={{height:height,width:width}}
+        >
             <div className={`
                 flex
                 items-center
@@ -21,15 +35,16 @@ const SearchBar = ({ onSearch, width, height, placeHolder,iconColor, borderColor
                 border-l
                 border-t
                 border-b
-                border-${borderColor}
-                bg-${backgroundColor}
                 border-opacity-40
                 px-2 
-            `}>
-                <FontAwesomeIcon icon={faMagnifyingGlass} className={`text-${iconColor}`} />
+            `}
+
+            style={{backgroundColor:backgroundColor, borderColor:borderColor,color:iconColor}}
+            >
+                <FontAwesomeIcon icon={faMagnifyingGlass}/>
             </div>
             <input
-                id={"searchbar-table"}
+                id={`${id}-searchbar`}
                 type={"text"}
                 className={`
                     w-full
@@ -37,13 +52,15 @@ const SearchBar = ({ onSearch, width, height, placeHolder,iconColor, borderColor
                     border-r
                     border-t
                     border-b
-                    border-${borderColor}
                     border-opacity-40 
-                    bg-${backgroundColor}
-                    text-${placeholderColor}
                     font-bold
                     pl-1
                 `}
+                style={{
+                    backgroundColor:backgroundColor, 
+                    color:inputTextColor,
+                    borderColor:borderColor,            
+                }}
                 onChange={handleSearchChange}
                 placeholder={placeHolder}
                 value={searchTerm}
@@ -53,14 +70,24 @@ const SearchBar = ({ onSearch, width, height, placeHolder,iconColor, borderColor
 }
 
 SearchBar.propTypes = {
+    id: PropTypes.string.isRequired,
     onSearch: PropTypes.func.isRequired,
     width: PropTypes.string.isRequired,
     height: PropTypes.string.isRequired,
     iconColor: PropTypes.string, // Couleur de l'icône
     borderColor: PropTypes.string, // Couleur de la bordure
-    placeholderColor: PropTypes.string, // Couleur du texte de l'placeholder
+    inputTextColor: PropTypes.string, // Couleur du texte de l'placeholder
     backgroundColor: PropTypes.string, // Couleur de fond de l'input
     placeHolder: PropTypes.string, // Couleur de fond de l'input
 };
+
+
+SearchBar.defaultProps = {
+    iconColor: "black",
+    borderColor: "black",
+    inputTextColor: "black",
+    backgroundColor: "white",
+    placeHolder: "Search"
+  };
 
 export default SearchBar;

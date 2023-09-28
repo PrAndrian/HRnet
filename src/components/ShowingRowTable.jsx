@@ -72,4 +72,8 @@ ShowingRowTable.propTypes = {
   height: PropTypes.string.isRequired, // Hauteur du composant
 };
 
+ShowingRowTable.defaultProps = {
+  width : 'auto'
+};
+
 export default ShowingRowTable;

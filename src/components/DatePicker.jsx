@@ -7,20 +7,29 @@ const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,
   // Validate minYear and maxYear to ensure they are within a reasonable range
   substractionYears = new Date().getFullYear() - substractionYears; // Maximum year set to the current year if it's above that
 
-  // const [selectedDate,setSelectedDate] = useState("")
   const [selectedYear, setSelectedYear] = useState(substractionYears); // Initialize with the current year
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // Initialize with the current month (0-indexed)
   const [visible,setVisible] = useState(false)
 
+  const handleChange = (event) => {
+    const inputDate = event.target.value;
+    setter(inputDate);
+  };
+
+  const formatSelectedDate = (date) => {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+  };
+
   const handleDateClick = (date) => {
     const formatedDate = formatSelectedDate(date)
-    // setSelectedDate(formatedDate)
     setter(formatedDate)
     setVisible(false);
   };
 
-  const handleClick = (e)=>{
-    e.preventDefault()
+  const handleClick = ()=>{
     setVisible(!visible)
   }
 
@@ -32,12 +41,6 @@ const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,
     setSelectedMonth(parseInt(event.target.value, 10));
   };
 
-  const formatSelectedDate = (date) => {
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
 
   const renderYearDropdown = () => {
     const years = [];
@@ -122,25 +125,35 @@ const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,
 
   return (
     <div id={id} className={`w-${width} relative ${zIndex}`}>
-      <button className={`
-          font-semibold
-          flex
-          items-center
-          justify-between
-          h-${height}
-          w-full
-          p-2
-          bg-transparent
-          border  
-          rounded-lg
-          ${isError ? "border-4 border-red" : `border-[#ccc]`}
-        `}
-        style={{ backgroundColor, color: textColor }}
-        onClick={handleClick}
-      > 
-        {selectedDate === "" ? "Choose..." : selectedDate }
-        <FontAwesomeIcon icon={faCalendar}/>    
-      </button>
+      <div className='
+        flex
+        items-center
+        justify-between
+        relative
+        '
+      >
+        <input className={`
+            font-semibold
+            flex
+            items-center
+            justify-between
+            h-${height}
+            w-full
+            p-2
+            bg-transparent
+            border  
+            rounded-lg
+            ${isError ? "border-4 border-red" : `border-[#ccc]`}
+          `}
+          style={{ backgroundColor, color: textColor }}
+          onFocus={handleClick}
+          // onBlur={()=>setTimeout(handleClick, 200)}
+          onChange={handleChange}
+          value={selectedDate}
+          type="date"
+        /> 
+        <FontAwesomeIcon className='absolute right-3' icon={faCalendar}/>    
+      </div>
       {visible &&      
         <div
           style={{ color: textColor }} 

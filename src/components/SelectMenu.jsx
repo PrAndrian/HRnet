@@ -8,19 +8,22 @@ const SelectMenu = ({
   id,
   values,
   setter,
+  inputValue,
   isError,
   width,
+  inputHeight,
+  inputTextColor,
+  inputBackgroundColor,
   backgroundColor,
+  activeColor,
   textColor,
-  inputValue,
+  iconColor,
   }) => {
   console.log(inputValue)
   const [options, setOptions] = useState(values)
-  // const [inputValue, setInputValue] = useState("")
   const [visibility, setVisibility] = useState(false)
 
   const handleClickValue = (e) => {
-    // setInputValue(e.target.getAttribute("value"))
     setter(e.target.getAttribute("value"))
     setVisibility(false);
   }
@@ -48,7 +51,10 @@ const SelectMenu = ({
   };
 
   return (
-    <div className={`w-${width} relative`}>
+    <div 
+      className={`relative`}
+      style={{ width: width }}
+    >
       <input id={id} name={id} type="hidden" value={inputValue}/>
       <button 
         className={`
@@ -61,10 +67,10 @@ const SelectMenu = ({
           bg-transparent
           border
           rounded-lg
-          w-${width}
+          w-full
           ${isError ? 'border-4 border-red' : `border-[#ccc]`}
         `}
-        style={{ backgroundColor, color: textColor }}
+        style={{ backgroundColor: inputBackgroundColor, color: textColor, width : width, height: inputHeight}}
         onClick={handleToggle}
       >
           <span>{inputValue === "" ? "Choose..." : inputValue}</span>
@@ -72,23 +78,27 @@ const SelectMenu = ({
       </button>
       {visibility &&
         <div className={`
-            w-${width}
+            w-full
             absolute
             bg-white
             border
             rounded-lg
             shadow-[0_3px_10px_rgb(0,0,0,0.2)]
           `}
-          style={{ width }}
+          style={{ backgroundColor:backgroundColor, color: textColor, width : width}}
         >
           <div className="p-2">
             <SearchBar 
+              id={id}
               onSearch={handleSearch}
-              width={width} 
-              height="[45px]" 
+              height={inputHeight}
+              width="auto" 
               placeHolder={'Search'}
-              borderColor={'#414A3D'}
-              backgroundColor={'transparent'}
+              borderColor={textColor}
+              backgroundColor={inputBackgroundColor}
+              iconColor={iconColor}
+              inputTextColor={inputTextColor}
+              placeholderColor={inputTextColor}
             />
           </div>
           <ul className="mt-1 px-2 max-h-[200px] overflow-y-auto pb-2 ">
@@ -104,9 +114,10 @@ const SelectMenu = ({
                     cursor-pointer
                     hover:opacity-75
                     rounded-lg
-                    ${inputValue===option.name ? 'bg-tertiary' : ''}
                   `}
                   onClick={handleClickValue}
+
+                  style={{ backgroundColor: inputValue===option.name ? `${activeColor}` : '', }}
                 >
                   {option.name}
                 </li>
@@ -125,18 +136,28 @@ SelectMenu.propTypes = {
   setter: PropTypes.func.isRequired,
   isError: PropTypes.bool.isRequired,
   values: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string || PropTypes.number)).isRequired,
-  width: PropTypes.string, // Largeur personnalisée
-  height: PropTypes.string, // Hauteur personnalisée
-  backgroundColor: PropTypes.string, // Couleur de fond personnalisée
-  textColor: PropTypes.string, // Couleur du texte personnalisée
-  borderColor: PropTypes.string, // Couleur de la bordure personnalisée
+  width: PropTypes.string,
+  inputHeight: PropTypes.string,
+  backgroundColor: PropTypes.string,
+  textColor: PropTypes.string,
+  borderColor: PropTypes.string,
+  inputTextColor: PropTypes.string,
+  inputBackgroundColor: PropTypes.string,
+  iconColor: PropTypes.string,
+  activeColor: PropTypes.string,
 };
 
-// Définir les valeurs par défaut pour les nouvelles props
+
 SelectMenu.defaultProps = {
-  width: 'full', // Largeur par défaut
-  backgroundColor: 'transparent', // Couleur de fond par défaut
-  textColor: '#000', // Couleur du texte par défaut
+  width: '100%',
+  backgroundColor: 'white',
+  textColor: 'black',
+  inputHeight: '45px',
+  borderColor: 'black',
+  inputTextColor: 'black',
+  inputBackgroundColor: 'transparent',
+  iconColor: 'black',
+  activeColor: '#D0E7B9',
 };
 
 export default SelectMenu

@@ -10,34 +10,37 @@ const ToastModal = ({ isVisible, message, error, setter }) => {
     }
 
     return (
-        <div
-            className={`
-                fixed right-0 top-20 p-5 text-xl rounded-md transform transition-transform 
-                ${isVisible ? ' translate-x-0 ' : ' translate-x-full '} 
-                ${error ? " bg-red text-white " : ' bg-primary text-white '}`
-            }
-        >
-            <FontAwesomeIcon 
-                className={` 
-                    ${isVisible ? 'block' : "invisible"}  
-                    border 
-                    absolute 
-                    top-[-10px] 
-                    left-[-10px] 
-                    mr-2 
-                    p-1 
-                    bg-white 
-                    rounded-md 
-                    text-[#000] 
-                    cursor-pointer`
+        <div className={`${isVisible ? 'block' : 'hidden'} absolute left-0 top-0 h-[100%] w-[100%] flex justify-center items-center bg-black z-50 bg-opacity-80`}>
+            <div
+                className={`
+                    relative p-5 text-xl rounded-md
+                    ${error ? " bg-red text-white " : ' bg-primary text-white '}`
                 }
+            >
+                <FontAwesomeIcon 
+                    className={` 
+                        ${isVisible ? 'block' : "invisible"}  
+                        w-5 
+                        h-5
+                        border 
+                        absolute 
+                        top-[-10px] 
+                        left-[-10px] 
+                        mr-2 
+                        p-1 
+                        bg-white 
+                        rounded-md 
+                        text-[#000] 
+                        cursor-pointer`
+                    }
 
-                onClick={handleClick}
-                icon={faXmark}
-            />
-            <span className='pl-2'>{message}</span>
-            <br/>
-            {!error && <Link className='underline' to="/employees">Check list employees</Link>}
+                    onClick={handleClick}
+                    icon={faXmark}
+                />
+                <span className='pl-2'>{message}</span>
+                <br/>
+                {!error && <Link className='underline' to="/employees">Check list employees</Link>}
+            </div>
         </div>
     );
 }
