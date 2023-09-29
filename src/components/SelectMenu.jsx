@@ -19,7 +19,6 @@ const SelectMenu = ({
   textColor,
   iconColor,
   }) => {
-  console.log(inputValue)
   const [options, setOptions] = useState(values)
   const [visibility, setVisibility] = useState(false)
 

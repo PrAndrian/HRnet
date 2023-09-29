@@ -57,15 +57,33 @@ const EmployeeCreationForm = ({onToast}) => {
             return regexEspaces.test(word) ? word.replace(/\s+/g, ' ') : word 
         }
         
-        // function formatDate(date){
+        function formatDate(inputDate) {
+            // Parse the input date string in "YYYY-MM-DD" format
+            const parts = inputDate.split('-');
+            const year = parseInt(parts[0], 10);
+            const month = parseInt(parts[1], 10);
+            const day = parseInt(parts[2], 10);
+            
+          
+            // Create a Date object with the parsed year, month, and day
+            const date = new Date(year, month - 1, day);
+          
+            // Use the Date object's methods to get day, month, and year components
+            const formattedDay = date.getDate().toString().padStart(2, '0');
+            const formattedMonth = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based
+            const formattedYear = date.getFullYear();
+          
+            // Format these components into "DD/MM/YYYY" format
+            const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear}`;
 
-        // }
+            return !isNaN(formattedDay || formattedMonth || formattedYear) ? formattedDate : '';
+          }
 
         const employee = {
             firstName: verfyWordSpaces(firstName),
             lastName : verfyWordSpaces(lastName),
-            birthdate : birthdate,
-            startDate : startDate,
+            birthdate : formatDate(birthdate),
+            startDate : formatDate(startDate),
             departement: verfyWordSpaces(departement),
             street: verfyWordSpaces(street),
             city: verfyWordSpaces(city),
@@ -75,8 +93,8 @@ const EmployeeCreationForm = ({onToast}) => {
 
 
         function verfyDate(date,YearsRestriction){
-            const parts = date.split('-');
-            const year = parts[0];
+            const parts = date.split('/');
+            const year = parts[2];
 
             console.log(year)
     

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import EmployeeCreationForm from "../components/EmployeeCreationForm"
 import SeparationUI from "../components/SeparationUI"
-import ToastModal from "../components/ToastModal";
+import NotificationModal from "../components/NotificationModal";
 
 const Home = () => {
   const [ToastVisible, setIsVisible] = useState(false);
@@ -12,12 +12,6 @@ const Home = () => {
     setError(isError);
     setToastMessage(message);
     setIsVisible(true);
-
-    setTimeout(() => {
-      setIsVisible(false);
-      setToastMessage('');
-      setError(false);
-    }, 7000); // Le toast disparaîtra après 3 secondes
   };
 
   return (
@@ -25,7 +19,7 @@ const Home = () => {
       <h1 className="text-secondary text-[40px] w-[260px] p-5 md:p-5">
         Create New Employee
       </h1>
-      <ToastModal 
+      <NotificationModal 
         isVisible={ToastVisible} 
         message={toastMessage} 
         error={error}

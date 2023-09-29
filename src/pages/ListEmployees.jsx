@@ -4,15 +4,15 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../components/SearchBar";
 import { Link } from "react-router-dom";
 import EmployeeTable from "../components/EmployeeTable";
-// import { useSelector } from "react-redux"; // A dé/commenter selon les data que vous utilisez
+import { useSelector } from "react-redux"; // A dé/commenter selon les data que vous utilisez
 import ShowingRowTable from "../components/ShowingRowTable";
 import PaginationTable from "../components/PaginationTable";
 import { useState } from "react";
-import employees from "../data/employeeMock"
+// import employees from "../data/employeeMock"
 
 const ListEmployees = () => {
-  // const listEmployees = useSelector((state) => state.employees.list) 
-  const listEmployees = employees
+  const listEmployees = useSelector((state) => state.employees.list) 
+  // const listEmployees = employees
 
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
