@@ -103,7 +103,7 @@ const EmployeeCreationForm = ({onToast}) => {
         }
 
         const valuesEmployee = Object.values(employee);
-        const regex = /^[a-zA-Z0-9\-/ éèàùêâô]+$/;
+        const regex = /^[a-zA-Z0-9\-/ éèàùìèùêâôîû]+$/;
 
         valuesEmployee.map((value,index)=>{
 
