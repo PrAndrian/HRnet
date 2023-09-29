@@ -24,12 +24,12 @@ const Navbar = () => {
       border-[#414A3D]
       fixed
       md:relative
-      ${ !isOpen ? 'left-[-14%] md:left-0' : 'left-0'}`}
+      ${ !isOpen ? 'left-[-15%] md:left-0' : 'left-0'}`}
     >
       <div className='
         absolute 
         top-[45px] 
-        right-[-18px] 
+        right-[-20px] 
         md:right-[-15px] 
         border 
         border-opacity-40
@@ -38,10 +38,11 @@ const Navbar = () => {
         px-1 
         bg-[#F8FFEC]
         cursor-pointer
+        md:hidden
       '
       onClick={()=>setIsOpen(!isOpen)}
       >
-        <FontAwesomeIcon icon={faChevronUp} className={`${isOpen ? "rotate-[-90deg]" : "rotate-[90deg]"}`} />
+        <FontAwesomeIcon icon={faChevronUp} className={`${isOpen ? "rotate-[-90deg]" : "rotate-[90deg]"} `} />
       </div>
 
       <Link to="/" >
