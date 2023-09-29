@@ -95,8 +95,6 @@ const EmployeeCreationForm = ({onToast}) => {
         function verfyDate(date,YearsRestriction){
             const parts = date.split('/');
             const year = parts[2];
-
-            console.log(year)
     
             const maxYear = new Date().getFullYear() - YearsRestriction.substractionYears
             const minYear = YearsRestriction.minYear

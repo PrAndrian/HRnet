@@ -147,7 +147,7 @@ const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,
           `}
           style={{ backgroundColor, color: textColor }}
           onFocus={handleClick}
-          // onBlur={()=>setTimeout(handleClick, 200)}
+          onBlur={()=>setTimeout(handleClick, 200)}
           onChange={handleChange}
           value={selectedDate}
           type="date"

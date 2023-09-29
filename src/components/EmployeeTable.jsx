@@ -86,35 +86,42 @@ const EmployeeTable = ({ headColumns,listEmployees,minWidth,height, headerBgColo
                     ))}
                 </tr>
             </thead>
-            <tbody>
-                {sortedData.length === 0 &&
-                    <span className="w-full my-20 text-xl font-bold flex justify-center items-center">Empty Table</span>
-                }
-                {sortedData.map((employee, index) => (
-                    <tr
-                        key={index}
-                        className="
-                            flex                  
-                            border-b 
-                            border-[#414A3D] 
-                            border-opacity-40
-                        ">
-                        {Object.values(employee).map((value, i) => (
-                            <td key={value + i} className="
-                                flex-1
-                                h-[60px]
-                                text-ellipsis 
-                                overflow-hidden
-                                whitespace-nowrap
-                                pl-5
-                                pt-4
-                            ">
-                                {value}
-                            </td>
+                {sortedData.length === 0 ?
+                    <tbody className="w-full my-20 text-xl font-bold flex justify-center items-center">
+                        <tr>
+                            <td>
+                                Empty Table
+                            </td>        
+                        </tr>
+                    </tbody> 
+                    :
+                    <tbody>
+                        {sortedData.map((employee, index) => (
+                            <tr
+                                key={index}
+                                className="
+                                    flex                  
+                                    border-b 
+                                    border-[#414A3D] 
+                                    border-opacity-40
+                                ">
+                                {Object.values(employee).map((value, i) => (
+                                    <td key={value + i} className="
+                                        flex-1
+                                        h-[60px]
+                                        text-ellipsis 
+                                        overflow-hidden
+                                        whitespace-nowrap
+                                        pl-5
+                                        pt-4
+                                    ">
+                                        {value}
+                                    </td>
+                                ))}
+                            </tr>
                         ))}
-                    </tr>
-                ))}
-            </tbody>
+                    </tbody>
+                }
         </table>
     );
 }
