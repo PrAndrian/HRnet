@@ -3,6 +3,30 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 
+
+/**
+ * DatePicker is a customizable date picker component for React.
+ *
+ * @component
+ * @param {Object} props - The component's props object.
+ * @param {string} props.id - The unique identifier for the date picker element.
+ * @param {string} props.selectedDate - The selected date in 'YYYY-MM-DD' format.
+ * @param {number} [props.minYear] - The minimum year available in the year dropdown.
+ * @param {number} props.substractionYears - The number of years to subtract from the current year
+ *   to determine the maximum year in the year dropdown.
+ * @param {string} props.zIndex - The CSS z-index property for the date picker.
+ * @param {boolean} props.isError - Indicates if there's an error state.
+ * @param {function} props.setter - A callback function to set the selected date.
+ * @param {string} [props.backgroundColor] - The background color for the input field.
+ * @param {string} [props.backgroundColorDropdown] - The background color for the dropdown.
+ * @param {string} [props.textColor] - The text color for the input field.
+ * @param {string} [props.borderColor] - The border color for the input field.
+ * @param {string} [props.width] - The width of the input field.
+ * @param {string} [props.height] - The height of the input field.
+ *
+ * @returns {JSX.Element} Returns the DatePicker component.
+ */
+
 const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,setter,backgroundColor,backgroundColorDropdown, textColor, borderColor, width,height }) => {
   // Validate minYear and maxYear to ensure they are within a reasonable range
   substractionYears = new Date().getFullYear() - substractionYears; // Maximum year set to the current year if it's above that
@@ -11,11 +35,22 @@ const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // Initialize with the current month (0-indexed)
   const [visible,setVisible] = useState(false)
 
+  /**
+   * Handles the change event of the input field.
+   *
+   * @param {Object} event - The change event object.
+   */
   const handleChange = (event) => {
     const inputDate = event.target.value;
     setter(inputDate);
   };
 
+  /**
+   * Formats a given date object as 'YYYY-MM-DD'.
+   *
+   * @param {Date} date - The date object to be formatted.
+   * @returns {string} The formatted date string.
+   */
   const formatSelectedDate = (date) => {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -23,25 +58,50 @@ const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,
     return `${year}-${month}-${day}`;
   };
 
+  /**
+   * Handles the click event on a date cell in the calendar.
+   * Formats the selected date and updates the state.
+   *
+   * @param {Date} date - The selected date.
+   */
   const handleDateClick = (date) => {
     const formatedDate = formatSelectedDate(date)
     setter(formatedDate)
     setVisible(false);
   };
 
+  /**
+   * Toggles the visibility state of the calendar dropdown.
+   */
   const handleClick = ()=>{
     setVisible(!visible)
   }
 
+  /**
+   * Handles the change event of the year dropdown.
+   * Updates the selected year in the state.
+   *
+   * @param {Object} event - The change event object.
+   */
   const handleYearChange = (event) => {
     setSelectedYear(parseInt(event.target.value, 10));
   };
 
+  /**
+   * Handles the change event of the month dropdown.
+   * Updates the selected month in the state.
+   *
+   * @param {Object} event - The change event object.
+   */
   const handleMonthChange = (event) => {
     setSelectedMonth(parseInt(event.target.value, 10));
   };
 
-
+  /**
+   * Renders the year dropdown with a range of years.
+   *
+   * @returns {JSX.Element} The year dropdown component.
+   */
   const renderYearDropdown = () => {
     const years = [];
 
@@ -65,6 +125,11 @@ const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,
     );
   };
 
+  /**
+ * Renders the month dropdown with a list of month options.
+ *
+ * @returns {JSX.Element} The month dropdown component.
+ */
   const renderMonthDropdown = () => {
     const months = [
       'January', 'February', 'March', 'April', 'May', 'June',
@@ -86,6 +151,11 @@ const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,
     );
   };
 
+  /**
+ * Renders the calendar days grid for the selected month.
+ *
+ * @returns {JSX.Element} The calendar days grid component.
+ */
   const renderCalendarDays = () => {
     const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
 
