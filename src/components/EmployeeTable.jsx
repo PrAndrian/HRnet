@@ -9,6 +9,12 @@ const EmployeeTable = ({ headColumns,listEmployees,minWidth,height, headerBgColo
     const [sortColumn, setSortColumn] = useState(null);
     const [sortOrder, setSortOrder] = useState('asc');
 
+    function isDate(string) {
+        const date = new Date(string);
+        return !isNaN(date.getTime());
+    }
+      
+
     // Fonction pour trier les données
     const sortData = (data, columnIndex, order) => {
         if (sortColumn === null) {
@@ -18,6 +24,17 @@ const EmployeeTable = ({ headColumns,listEmployees,minWidth,height, headerBgColo
         return data.sort((a, b) => {
             const valueA = a[columnIndex];
             const valueB = b[columnIndex];
+
+            if(isDate(valueA) || isDate(valueB)){
+                const DateA = new Date(a[columnIndex]);
+                const DateB = new Date(b[columnIndex]);
+
+                if (order === 'asc') {
+                    return DateA - DateB;
+                } else {
+                    return DateB - DateA;
+                }
+            }
 
             if (order === 'asc') {
                 return valueA.localeCompare(valueB);
