@@ -14,6 +14,7 @@ export default {
       transparent: 'rgb(var(--color-transparent) / <alpha-value>)',
       red: 'rgb(var(--color-red) / <alpha-value>)',
       black: 'rgb(var(--color-black) / <alpha-value>)',
+      orange: 'rgb(var(--color-orange) / <alpha-value>)',
     },
     extend: {},
   },

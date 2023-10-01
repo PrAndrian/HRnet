@@ -1,17 +1,29 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import EmployeeCreationForm from "../components/EmployeeCreationForm"
 import SeparationUI from "../components/SeparationUI"
-import NotificationModal from "../components/NotificationModal";
+import { useDispatch, useSelector } from "react-redux";
+import { createEmployee } from "../redux/features/employeesSlice";
+import NotificationModal from "../components/notificationModal";
 
 const Home = () => {
   const [ToastVisible, setIsVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [error, setError] = useState(false);
+  const [isChoice, setIsChoice] = useState(false);
+  const [employee, setIsEmployee] = useState(null);
+  const listEmployees = useSelector((state)=>state.employees.list)
+  const dispatch = useDispatch()
 
-  const handleToast = (isError,message) => {
+  const handleClickYes = useCallback(() => {
+    dispatch(createEmployee([...listEmployees,employee]));
+  },[dispatch,listEmployees,employee])
+
+  const handleToast = (isError,message,employeeTmp,choice) => {
     setError(isError);
     setToastMessage(message);
     setIsVisible(true);
+    employeeTmp && setIsEmployee(employeeTmp);
+    setIsChoice(choice)
   };
 
   return (
@@ -24,6 +36,8 @@ const Home = () => {
         message={toastMessage} 
         error={error}
         setter={setIsVisible}
+        onYes={handleClickYes}
+        isChoice={isChoice}
       />
       <SeparationUI/>
       <EmployeeCreationForm  onToast={handleToast}/>

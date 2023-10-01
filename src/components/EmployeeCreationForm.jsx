@@ -7,6 +7,7 @@ import { createEmployee } from "../redux/features/employeesSlice";
 import PropTypes from 'prop-types';
 import DatePicker from "./DatePicker";
 import SelectMenu from "./SelectMenu";
+import { areStringsPhoneticallyAlike } from "../utils/phoneticalComparaisonStrong";
 
 /**
  * EmployeeCreationForm is a component for creating employee profiles.
@@ -17,6 +18,9 @@ import SelectMenu from "./SelectMenu";
  * @returns {JSX.Element} Returns the EmployeeCreationForm component.
  */
 const EmployeeCreationForm = ({onToast}) => {
+    const listEmployees = useSelector((state)=>state.employees.list)
+    const dispatch = useDispatch()
+
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [birthdate, setBirthdate] = useState('')
@@ -36,10 +40,6 @@ const EmployeeCreationForm = ({onToast}) => {
         substractionYears: -5,
     }
 
-    const dispatch = useDispatch()
-    const listEmployees = useSelector((state)=>state.employees.list)
-    const [error, setError] = useState(false);
-
     const InitialErrors = {
         firstName: false,
         lastName : false,
@@ -54,7 +54,8 @@ const EmployeeCreationForm = ({onToast}) => {
 
     // Initialize error states for each input field
     const [errors, setErrors] = useState(InitialErrors);
-    
+    const [error, setError] = useState(false);
+
     /**
      * Formats a date string from 'YYYY-MM-DD' to 'DD/MM/YYYY'.
      *
@@ -68,7 +69,6 @@ const EmployeeCreationForm = ({onToast}) => {
         const month = parseInt(parts[1], 10);
         const day = parseInt(parts[2], 10);
         
-        
         // Create a Date object with the parsed year, month, and day
         const date = new Date(year, month - 1, day);
         
@@ -78,7 +78,7 @@ const EmployeeCreationForm = ({onToast}) => {
         const formattedYear = date.getFullYear();
         
         // Format these components into "DD/MM/YYYY" format
-        const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear}`;
+        const formattedDate = `${formattedMonth}/${formattedDay}/${formattedYear}`;
 
         return !isNaN(formattedDay || formattedMonth || formattedYear) ? formattedDate : '';
     }
@@ -110,6 +110,22 @@ const EmployeeCreationForm = ({onToast}) => {
 
         return year < minYear || year > maxYear
     }
+
+
+    function isAgeDifferenceAtLeast18Years(date1, date2) {
+        // Parse the input dates into Date objects
+        const parsedDate1 = new Date(date1);
+        const parsedDate2 = new Date(date2);
+      
+        // Calculate the difference in milliseconds
+        const timeDifference = Math.abs(parsedDate1 - parsedDate2);
+      
+        // Calculate the number of milliseconds in 18 years
+        const millisecondsIn18Years = 18 * 365 * 24 * 60 * 60 * 1000;
+      
+        // Compare the time difference with 18 years
+        return timeDifference >= millisecondsIn18Years;
+      }
 
     /**
      * Handles the form submission for creating an employee profile.
@@ -145,7 +161,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     [Object.keys(employee)[index]]: true,
                 }));
                 onToast(true, 'No empty inputs are allowed');
-                throw new Error("field(s) is empty : "+error);
+                throw new Error(" : "+error);
             }
             
 
@@ -159,7 +175,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     [Object.keys(employee)[index]]: true,
                 }));
                 onToast(true, `Date should be between ${YearsRestriction.minYear} and ${maxYear}`);
-                throw new Error("azeaezae : "+error);
+                throw new Error(" : "+error);
             }
 
             if(!regex.test(value)){
@@ -173,8 +189,31 @@ const EmployeeCreationForm = ({onToast}) => {
             }
         })
 
+        if (!isAgeDifferenceAtLeast18Years(employee.birthdate, employee.startDate)) {
+            setError(true);
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                [Object.keys(employee)[2]]: true,
+                [Object.keys(employee)[3]]: true,
+            }));
+            onToast(true, 'Employee must be at least 18 years old');
+            throw new Error(" : "+error);
+        } 
+
+        listEmployees.forEach(theEmployee => {
+            if(theEmployee.birthdate===employee.birthdate 
+                && areStringsPhoneticallyAlike(theEmployee.firstName,employee.firstName) 
+                && areStringsPhoneticallyAlike(theEmployee.lastName,employee.lastName)
+            ){
+                setError(true);
+                onToast(true, 'Employee already exists',employee,true);
+                throw new Error(" : "+error);
+            }
+        });
+
         dispatch(createEmployee([...listEmployees,employee]));
-        setError(false);
+
+        setError(false)
         setFirstName('')
         setLastName('')
         setBirthdate('')
@@ -184,7 +223,7 @@ const EmployeeCreationForm = ({onToast}) => {
         setCity('')
         setState('')
         setZipCode('')
-        onToast(false, 'Employé ajouté avec succès !')
+        onToast(false, 'Employee added successfully !')
     }
 
     return (

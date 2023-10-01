@@ -4,13 +4,15 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
-const NotificationModal = ({ isVisible, message, error, setter }) => {
-    
+const NotificationModal = ({ isVisible, message, error, setter, onYes, isChoice }) => {
+
     const handleClick = useCallback(event => {
         if (event.target.id || event.target.icon) {
             setter(false)
         }
     },[setter])
+
+
 
     return (
         <div id={'modal'} 
@@ -32,11 +34,14 @@ const NotificationModal = ({ isVisible, message, error, setter }) => {
         >
             <div
                 className={`
-                relative 
-                p-5 
-                text-xl 
-                rounded-md
-                ${error ? " bg-red text-white " : ' bg-primary text-white '}`
+                    flex
+                    flex-col
+                    relative 
+                    p-5 
+                    text-xl 
+                    rounded-md
+                    ${isChoice ? 'bg-orange text-white' : error ? " bg-red text-white " :  ' bg-primary text-white '}
+                `
             }>
                 <button 
                     id={'buttonCloseModal'} 
@@ -56,9 +61,39 @@ const NotificationModal = ({ isVisible, message, error, setter }) => {
                 >
                     <FontAwesomeIcon id={'iconCloseModal'} icon={faXmark}/>
                 </button>
-                <span className='pl-2'>{message}</span>
-                <br/>
+                <span className='font-bold'>{message}</span>
+
                 {!error && <Link className='underline' to="/employees">Check list employees</Link>}
+
+                {isChoice &&<span>Are you sure you want to continue ?</span>}
+                {isChoice && (
+                    <footer className='w-full flex gap-2 justify-center pt-4 pb-2 '>
+                        <button id={'buttonCloseModal-yes'}
+                            onClick={onYes} 
+                            className='
+                            w-full 
+                            p-2 
+                            bg-white 
+                            text-black 
+                            rounded'
+                        >
+                            Yes
+                        </button>
+
+                        <button id={'buttonCloseModal-no'}
+                            onClick={(event)=>handleClick(event)} 
+                            className='
+                                w-full 
+                                p-2 
+                                bg-white 
+                                text-black 
+                                rounded
+                            '
+                        >
+                            No
+                        </button>
+                    </footer>)
+                }
             </div>
         </div>
     );
@@ -67,8 +102,11 @@ const NotificationModal = ({ isVisible, message, error, setter }) => {
 NotificationModal.propTypes = {
     isVisible: PropTypes.bool.isRequired,
     message: PropTypes.string.isRequired,
-    error: PropTypes.bool,
     setter : PropTypes.func.isRequired,
+    error: PropTypes.bool,
+    isChoice: PropTypes.bool,
+    onYes: PropTypes.func,
+    employeeTmp : PropTypes.objectOf(PropTypes.string)
 };
 
 export default NotificationModal

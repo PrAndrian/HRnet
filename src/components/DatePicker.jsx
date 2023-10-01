@@ -29,9 +29,9 @@ import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,setter,backgroundColor,backgroundColorDropdown, textColor, borderColor, width,height }) => {
   // Validate minYear and maxYear to ensure they are within a reasonable range
-  substractionYears = new Date().getFullYear() - substractionYears; // Maximum year set to the current year if it's above that
+  const maxYear = new Date().getFullYear() - substractionYears; // Maximum year set to the current year if it's above that
 
-  const [selectedYear, setSelectedYear] = useState(substractionYears); // Initialize with the current year
+  const [selectedYear, setSelectedYear] = useState(maxYear); // Initialize with the current year
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // Initialize with the current month (0-indexed)
   const [visible,setVisible] = useState(false)
 
@@ -73,7 +73,7 @@ const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,
   /**
    * Toggles the visibility state of the calendar dropdown.
    */
-  const handleClick = ()=>{
+  const handleFocus = ()=>{
     setVisible(!visible)
   }
 
@@ -106,7 +106,7 @@ const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,
     const years = [];
 
     // Generate a range of years within the specified minimum and maximum
-    for (let year = minYear; year <= substractionYears; year++) {
+    for (let year = minYear; year <= maxYear; year++) {
       years.push(
         <option key={year} value={year}>
           {year}
@@ -192,7 +192,14 @@ const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,
       </div>
     );
   };
-
+  const formatDatePlaceholder = () => {
+    // Customize the placeholder format here based on your requirements
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
   return (
     <div id={id} className={`w-${width} relative ${zIndex}`}>
       <div className='
@@ -202,7 +209,8 @@ const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,
         relative
         '
       >
-        <input className={`
+        <input 
+          className={`
             font-semibold
             flex
             items-center
@@ -216,11 +224,11 @@ const DatePicker = ({ id,selectedDate,minYear, substractionYears,zIndex,isError,
             ${isError ? "border-4 border-red" : `border-[#ccc]`}
           `}
           style={{ backgroundColor, color: textColor }}
-          onFocus={handleClick}
-          onBlur={()=>setTimeout(handleClick, 200)}
+          onFocus={handleFocus}
           onChange={handleChange}
           value={selectedDate}
           type="date"
+          placeholder={formatDatePlaceholder()}
         /> 
         <FontAwesomeIcon className='absolute right-3' icon={faCalendar}/>    
       </div>
