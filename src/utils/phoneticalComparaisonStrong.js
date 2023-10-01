@@ -1,3 +1,9 @@
+/**
+ * Calculates the Soundex code for a given string.
+ *
+ * @param {string} str - The input string for which to calculate the Soundex code.
+ * @returns {string} The calculated Soundex code for the input string.
+ */
 function calculateSoundex(str) {
     const upperStr = str.toUpperCase();
     const firstLetter = upperStr.charAt(0);
@@ -33,7 +39,14 @@ function calculateSoundex(str) {
 
     return soundexCode;
 }
-  
+
+/**
+ * Compares two strings for phonetic similarity using the Soundex algorithm.
+ *
+ * @param {string} str1 - The first string to compare.
+ * @param {string} str2 - The second string to compare.
+ * @returns {boolean} `true` if the strings are phonetically alike according to Soundex, `false` otherwise.
+ */
 export function areStringsPhoneticallyAlike(str1, str2) {
     const soundex1 = calculateSoundex(str1);
     const soundex2 = calculateSoundex(str2);
