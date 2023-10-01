@@ -49,7 +49,7 @@ const SelectMenu = ({
     if(visibility===false){
       setOptions(values)
     }
-    setVisibility(!visibility)
+    setTimeout(() =>setVisibility(!visibility),100)
   }
 
   const handleSearch = (searchTerm) => {

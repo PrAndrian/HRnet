@@ -44,7 +44,7 @@ const DatePicker = ({ id, selectedDate, minYear, substractionYears, zIndex, isEr
   };
 
   const handleOpenModal = () => {
-    setVisible(!visible);
+    setTimeout(() =>setVisible(!visible),100)
   };
   
   
