@@ -59,14 +59,27 @@ export function verfyDate(date,YearsRestriction){
  * @returns {boolean} `true` if the age difference is at least 18 years, `false` otherwise.
  */
 export function isAgeDifferenceAtLeast18Years(date1, date2) {
-   const parsedDate1 = new Date(date1);
-   const parsedDate2 = new Date(date2);
-   
-   // Calculate the difference in milliseconds
-   const timeDifference = Math.abs(parsedDate1 - parsedDate2);
-   
-   // Calculate the number of milliseconds in 18 years
-   const millisecondsIn18Years = 18 * 365 * 24 * 60 * 60 * 1000;
-   
-   return timeDifference >= millisecondsIn18Years;
-}
+    // Convert date strings to Date objects if necessary
+    const date1Obj = date1 instanceof Date ? date1 : new Date(date1);
+    const date2Obj = date2 instanceof Date ? date2 : new Date(date2);
+  
+    // Calculate the age difference in years
+    const yearDifference = date2Obj.getFullYear() - date1Obj.getFullYear();
+  
+    // Check if the age difference is at least 18 years
+    if (yearDifference > 18) {
+      return true;
+    } else if (yearDifference === 18) {
+      // If the difference is exactly 18 years, check the months and days
+      if (
+        date2Obj.getMonth() > date1Obj.getMonth() ||
+        (date2Obj.getMonth() === date1Obj.getMonth() &&
+          date2Obj.getDate() >= date1Obj.getDate())
+      ) {
+        return true;
+      }
+    }
+  
+    // If none of the conditions are met, the age difference is less than 18 years
+    return false;
+  }
