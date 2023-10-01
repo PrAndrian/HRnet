@@ -1,5 +1,5 @@
 import InputForm from "./InputForm";
-import departements from '../data/departements'
+import departments from '../data/departments'
 import states from '../data/states'
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,27 +25,23 @@ const EmployeeCreationForm = ({onToast}) => {
     const [lastName, setLastName] = useState('')
     const [birthdate, setBirthdate] = useState('')
     const [startDate, setStartDate] = useState('')
-    const [departement, setDepartement] = useState('')
+    const [department, setdepartment] = useState('')
     const [street, setStreet] = useState('')
     const [city, setCity] = useState('')
     const [state, setState] = useState('')
     const [zipCode, setZipCode] = useState('')
 
-    const YearsBirthRestriction = {
-        minYear: 1950,
-        substractionYears: 18,
-    }
-    const YearsStateRestriction = {
-        minYear: 2000,
-        substractionYears: -5,
-    }
+    const dateRestriction = {
+        birth: { minYear: 1950, subtractionYears: 18 },
+        state: { minYear: 2000, subtractionYears: -5 },
+    };
 
     const InitialErrors = {
         firstName: false,
         lastName : false,
         birthdate : false,
         startDate : false,
-        departement: false,
+        department: false,
         street: false,
         city: false,
         state: false,
@@ -105,7 +101,7 @@ const EmployeeCreationForm = ({onToast}) => {
         const parts = date.split('/');
         const year = parts[2];
 
-        const maxYear = new Date().getFullYear() - YearsRestriction.substractionYears
+        const maxYear = new Date().getFullYear() - YearsRestriction.subtractionYears
         const minYear = YearsRestriction.minYear
 
         return year < minYear || year > maxYear
@@ -142,17 +138,41 @@ const EmployeeCreationForm = ({onToast}) => {
             lastName : verfyWordSpaces(lastName),
             birthdate : formatDate(birthdate),
             startDate : formatDate(startDate),
-            departement: verfyWordSpaces(departement),
+            department: verfyWordSpaces(department),
             street: verfyWordSpaces(street),
             city: verfyWordSpaces(city),
             state: verfyWordSpaces(state),
             zipCode: verfyWordSpaces(zipCode),
         }
 
+        if (!isAgeDifferenceAtLeast18Years(employee.birthdate, employee.startDate)) {
+            setError(true);
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                [Object.keys(employee)[2]]: true,
+                [Object.keys(employee)[3]]: true,
+            }));
+            onToast(true, 'Employee must be at least 18 years old');
+            throw new Error(" : "+error);
+        } 
+
         const valuesEmployee = Object.values(employee);
         const regex = /^[a-zA-Z0-9\-/ éèàùìèùêâôîû]+$/;
 
         valuesEmployee.map((value,index)=>{
+            
+            const YearsRestriction = index===3 ? dateRestriction.state : dateRestriction.birth
+            if(((index===2 || index===3) && verfyDate(value,YearsRestriction))){
+                const maxYear = new Date().getFullYear() - YearsRestriction.subtractionYears
+                
+                setError(true);
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    [Object.keys(employee)[index]]: true,
+                }));
+                onToast(true, `Date should be between ${YearsRestriction.minYear} and ${maxYear}`);
+                throw new Error(" : "+error);
+            }
 
             if(value==='' || value===0){
                 setError(true);
@@ -161,20 +181,6 @@ const EmployeeCreationForm = ({onToast}) => {
                     [Object.keys(employee)[index]]: true,
                 }));
                 onToast(true, 'No empty inputs are allowed');
-                throw new Error(" : "+error);
-            }
-            
-
-            const YearsRestriction = index===3 ? YearsStateRestriction : YearsBirthRestriction
-            if(((index===2 || index===3) && verfyDate(value,YearsRestriction))){
-                const maxYear = new Date().getFullYear() - YearsRestriction.substractionYears
-                
-                setError(true);
-                setErrors((prevErrors) => ({
-                    ...prevErrors,
-                    [Object.keys(employee)[index]]: true,
-                }));
-                onToast(true, `Date should be between ${YearsRestriction.minYear} and ${maxYear}`);
                 throw new Error(" : "+error);
             }
 
@@ -188,17 +194,6 @@ const EmployeeCreationForm = ({onToast}) => {
                 throw new Error(" : "+error);
             }
         })
-
-        if (!isAgeDifferenceAtLeast18Years(employee.birthdate, employee.startDate)) {
-            setError(true);
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                [Object.keys(employee)[2]]: true,
-                [Object.keys(employee)[3]]: true,
-            }));
-            onToast(true, 'Employee must be at least 18 years old');
-            throw new Error(" : "+error);
-        } 
 
         listEmployees.forEach(theEmployee => {
             if(theEmployee.birthdate===employee.birthdate 
@@ -218,7 +213,7 @@ const EmployeeCreationForm = ({onToast}) => {
         setLastName('')
         setBirthdate('')
         setStartDate('')
-        setDepartement('')
+        setdepartment('')
         setStreet('')
         setCity('')
         setState('')
@@ -263,8 +258,8 @@ const EmployeeCreationForm = ({onToast}) => {
                 <label htmlFor="date-of-birth">Date of Birth</label>
                 <DatePicker
                     id={'date-of-birth'} 
-                    minYear={YearsBirthRestriction.minYear}
-                    substractionYears={YearsBirthRestriction.substractionYears}
+                    minYear={dateRestriction.birth.minYear}
+                    substractionYears={dateRestriction.birth.subtractionYears}
                     zIndex={"auto"}
                     setter={setBirthdate}
                     isError={errors.birthdate}
@@ -279,8 +274,8 @@ const EmployeeCreationForm = ({onToast}) => {
                 <label htmlFor="start-date">Start Date</label>
                 <DatePicker 
                     id='start-date' 
-                    minYear={YearsStateRestriction.minYear}
-                    substractionYears={YearsStateRestriction.substractionYears}
+                    minYear={dateRestriction.state.minYear}
+                    substractionYears={dateRestriction.state.subtractionYears}
                     zIndex={"auto"}
                     setter={setStartDate}
                     isError={errors.startDate}
@@ -292,11 +287,11 @@ const EmployeeCreationForm = ({onToast}) => {
 
                 <label htmlFor="department">Department</label>
                 <SelectMenu
-                    id={"departement"}
-                    values={departements}
-                    setter={setDepartement}
-                    isError={errors.departement}
-                    inputValue={departement}
+                    id={"department"}
+                    values={departments}
+                    setter={setdepartment}
+                    isError={errors.department}
+                    inputValue={department}
                 />
             </fieldset>
 

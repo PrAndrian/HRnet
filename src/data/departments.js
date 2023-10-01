@@ -1,4 +1,4 @@
-const departements = [
+const departments = [
     {
         name : "Sales"
     },
@@ -16,4 +16,4 @@ const departements = [
     }
 ]
 
-export default departements
+export default departments

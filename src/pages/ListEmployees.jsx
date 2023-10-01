@@ -27,7 +27,7 @@ const ListEmployees = () => {
       { label: "Last Name", value: "lastName" },
       { label: "Birthday", value: "birthdate" },
       { label: "Start Date", value: "startDate" },
-      { label: "Department", value: "departement" },
+      { label: "Department", value: "department" },
       { label: "Street", value: "street" },
       { label: "City", value: "city" },
       { label: "State", value: "state" },
