@@ -20,7 +20,7 @@ const EmployeeTable = ({ headColumns,listEmployees,minWidth,height, headerBgColo
         if (sortColumn === null) {
             setSortColumn("firstName");
         }
-
+        
         return data.sort((a, b) => {
             const valueA = a[columnIndex];
             const valueB = b[columnIndex];
@@ -29,18 +29,16 @@ const EmployeeTable = ({ headColumns,listEmployees,minWidth,height, headerBgColo
                 const DateA = new Date(a[columnIndex]);
                 const DateB = new Date(b[columnIndex]);
 
-                if (order === 'asc') {
-                    return DateA - DateB;
-                } else {
-                    return DateB - DateA;
-                }
+                return order === 'asc' ? 
+                    DateA - DateB 
+                : 
+                    DateB - DateA;
             }
 
-            if (order === 'asc') {
-                return valueA.localeCompare(valueB);
-            } else {
-                return valueB.localeCompare(valueA);
-            }
+            return order === 'asc' ? 
+                valueA.localeCompare(valueB) 
+            : 
+                valueB.localeCompare(valueA);
         });
     };
 
