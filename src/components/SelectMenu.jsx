@@ -1,7 +1,7 @@
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import PropTypes from 'prop-types';
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import SearchBar from "./SearchBar"
 
 const SelectMenu = ({
@@ -21,6 +21,23 @@ const SelectMenu = ({
   }) => {
   const [options, setOptions] = useState(values)
   const [visibility, setVisibility] = useState(false)
+
+  const elementRef = useRef(null);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+
+  const checkOverflow = () => {
+    if (elementRef.current) {
+      const element = elementRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      setIsOverflowing(element.bottom > windowHeight) 
+    }
+  };
+
+
+  useEffect(() => {
+    checkOverflow()
+  }, [visibility]);
 
   const handleClickValue = (e) => {
     setter(e.target.getAttribute("value"))
@@ -51,7 +68,7 @@ const SelectMenu = ({
 
   return (
     <div 
-      className={`relative`}
+      className={`flex relative ${isOverflowing ? 'flex-col-reverse':'flex-col'}`}
       style={{ width: width }}
     >
       <input id={id} name={id} type="hidden" value={inputValue}/>
@@ -75,56 +92,61 @@ const SelectMenu = ({
           <span>{inputValue === "" ? "Choose..." : inputValue}</span>
           <FontAwesomeIcon className={`w-3 h-3 ${visibility ? 'rotate-180': ''}`} icon={faChevronDown}/>    
       </button>
-      {visibility &&
-        <div className={`
-            w-full
-            absolute
-            bg-white
-            border
-            rounded-lg
-            shadow-[0_3px_10px_rgb(0,0,0,0.2)]
-          `}
-          style={{ backgroundColor:backgroundColor, color: textColor, width : width}}
-        >
-          <div className="p-2">
-            <SearchBar 
-              id={id}
-              onSearch={handleSearch}
-              height={inputHeight}
-              width="auto" 
-              placeHolder={'Search'}
-              borderColor={textColor}
-              backgroundColor={inputBackgroundColor}
-              iconColor={iconColor}
-              inputTextColor={inputTextColor}
-              placeholderColor={inputTextColor}
-            />
-          </div>
-          <ul className="mt-1 px-2 max-h-[200px] overflow-y-auto pb-2 ">
-            {
-              options.sort().map(option=>
-                <li 
-                  key={option.name} 
-                  value={option.name}
-                  className={`
-                    py-1
-                    px-2 
-                    font-semibold 
-                    cursor-pointer
-                    hover:opacity-75
-                    rounded-lg
-                  `}
-                  onClick={handleClickValue}
 
-                  style={{ backgroundColor: inputValue===option.name ? `${activeColor}` : '', }}
-                >
-                  {option.name}
-                </li>
-              )
-            }
-          </ul>
+      <div
+        ref={elementRef} 
+        className={`
+          ${visibility ? 'block' : 'hidden'}
+          ${isOverflowing ? 'mb-14' : 'mt-14'}
+          transition-max-height duration-300 ease-in-out
+          w-full
+          absolute
+          bg-white
+          border
+          rounded-lg
+          shadow-[0_3px_10px_rgb(0,0,0,0.2)]
+          z-40
+        `}
+        style={{ backgroundColor:backgroundColor, color: textColor, width : width}}
+      >
+        <div className="p-2">
+          <SearchBar 
+            id={id}
+            onSearch={handleSearch}
+            height={inputHeight}
+            width="auto" 
+            placeHolder={'Search'}
+            borderColor={textColor}
+            backgroundColor={inputBackgroundColor}
+            iconColor={iconColor}
+            inputTextColor={inputTextColor}
+            placeholderColor={inputTextColor}
+          />
         </div>
-      }
+        <ul className="mt-1 px-2 max-h-[200px] overflow-y-auto pb-2 ">
+          {
+            options.sort().map(option=>
+              <li 
+                key={option.name} 
+                value={option.name}
+                className={`
+                  py-1
+                  px-2 
+                  font-semibold 
+                  cursor-pointer
+                  hover:opacity-75
+                  rounded-lg
+                `}
+                onClick={handleClickValue}
+
+                style={{ backgroundColor: inputValue===option.name ? `${activeColor}` : '', }}
+              >
+                {option.name}
+              </li>
+            )
+          }
+        </ul>
+      </div>
     </div>
   )
 }

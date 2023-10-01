@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +8,22 @@ const DatePicker = ({ id, selectedDate, minYear, substractionYears, zIndex, isEr
   const [selectedYear, setSelectedYear] = useState(maxYear);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [visible, setVisible] = useState(false);
+
+  const elementRef = useRef(null);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+
+  const checkOverflow = () => {
+    if (elementRef.current) {
+      const element = elementRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      setIsOverflowing(element.bottom > windowHeight) 
+    }
+  };
+
+  useEffect(() => {
+    checkOverflow()
+  }, [visible]);
 
   const handleChange = (event) => {
     const inputDate = event.target.value;
@@ -30,7 +46,8 @@ const DatePicker = ({ id, selectedDate, minYear, substractionYears, zIndex, isEr
   const handleOpenModal = () => {
     setVisible(!visible);
   };
-
+  
+  
   const handleYearChange = (event) => {
     setSelectedYear(parseInt(event.target.value, 10));
   };
@@ -117,7 +134,7 @@ const DatePicker = ({ id, selectedDate, minYear, substractionYears, zIndex, isEr
   };
 
   return (
-    <div id={id} className={`w-${width} relative ${zIndex}`}>
+    <div id={id} className={`w-${width} relative flex ${isOverflowing ? 'flex-col-reverse':'flex-col'}`} style={{zIndex:zIndex}}>
       <div className='flex items-center justify-between relative'>
         <input 
           className={`
@@ -141,19 +158,37 @@ const DatePicker = ({ id, selectedDate, minYear, substractionYears, zIndex, isEr
         /> 
         <FontAwesomeIcon className='absolute right-3 cursor-pointer' icon={faCalendar} onClick={handleOpenModal}/>    
       </div>
-      {visible &&      
-        <div
-          style={{ color: textColor }} 
-          className={`container border border-${borderColor} mt-2 px-4 pt-2 bg-${backgroundColorDropdown} shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg absolute max-h-fit`}>
-          <div className="flex items-center justify-between gap-2 mb-4">
-            {renderYearDropdown()}
-            {renderMonthDropdown()}
-          </div>
-          <div>
-            {renderCalendarDays()}
-          </div>
+
+      <div
+        ref={elementRef}
+        style={{ color: textColor }} 
+        className={` 
+          ${visible ? 'block' : 'hidden'} 
+          ${isOverflowing ?'mb-12' :'mt-12'} 
+          z-10
+          container 
+          border 
+          border-${borderColor} 
+          px-4 
+          pt-2 
+          bg-${backgroundColorDropdown} 
+          shadow-[0_3px_10px_rgb(0,0,0,0.2)] 
+          rounded-lg 
+          absolute
+          max-h-fit
+          transition-max-height 
+          duration-300 
+          ease-in-out
+        `}
+      >
+        <div className="flex items-center justify-between gap-2 mb-4">
+          {renderYearDropdown()}
+          {renderMonthDropdown()}
         </div>
-      }
+        <div>
+          {renderCalendarDays()}
+        </div>
+      </div>
     </div>
   );
 };

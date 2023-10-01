@@ -265,7 +265,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     id={'date-of-birth'} 
                     minYear={YearsBirthRestriction.minYear}
                     substractionYears={YearsBirthRestriction.substractionYears}
-                    zIndex={"z-30"}
+                    zIndex={"auto"}
                     setter={setBirthdate}
                     isError={errors.birthdate}
                     textColor={'#414A3D'}
@@ -281,7 +281,7 @@ const EmployeeCreationForm = ({onToast}) => {
                     id='start-date' 
                     minYear={YearsStateRestriction.minYear}
                     substractionYears={YearsStateRestriction.substractionYears}
-                    zIndex={"z-20"}
+                    zIndex={"auto"}
                     setter={setStartDate}
                     isError={errors.startDate}
                     textColor={'#414A3D'}
