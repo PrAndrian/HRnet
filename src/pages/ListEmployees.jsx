@@ -1,13 +1,13 @@
 import SeparationUI from "../components/SeparationUI";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import SearchBar from "../components/SearchBar";
 import { Link } from "react-router-dom";
-import EmployeeTable from "../components/EmployeeTable";
-import { useSelector } from "react-redux"; // A dé/commenter selon les data que vous utilisez
-import ShowingRowTable from "../components/ShowingRowTable";
-import PaginationTable from "../components/PaginationTable";
+import {SearchBar} from "table-cmp";
+import {EmployeeTable} from "table-cmp";
+import {ShowingRowTable} from "table-cmp";
+import {PaginationTable} from "table-cmp";
 import { useState } from "react";
+import { useSelector } from "react-redux"; // A décommenter selon les data que vous utilisez
 // import employees from "../data/employeeMock"
 
 const ListEmployees = () => {
@@ -106,7 +106,7 @@ const ListEmployees = () => {
           listEmployees={
             currentItems.slice(indexOfFirstItem, indexOfLastItem)
           }
-          headerBgColor={'tertiary'} 
+          headerBgColor={'#C0DFA1'} 
           sortedColumnColor ={'secondary'}
           minWidth={'1440px'}
           height={'500px'}
@@ -129,13 +129,13 @@ const ListEmployees = () => {
           totalItems={listEmployees.length}
           indexOfFirstItem={indexOfFirstItem}
           indexOfLastItem={indexOfLastItem}
-          height={'[40px]'}
-          labelColor="[#414A3D]" // Couleur de l'étiquette "Show"
-          selectBorderColor={'[#414A3D]'} // Couleur de la bordure du select
+          height={'40px'}
+          labelColor="#414A3D" // Couleur de l'étiquette "Show"
+          selectBorderColor={'#414A3D'} // Couleur de la bordure du select
           selectBackgroundColor="transparent" // Couleur de fond du select
-          selectTextColor="[#414A3D]" // Couleur du texte du select
-          selectCursor="[#414A3D]" // Type de curseur pour le select
-          spanTextColor="[#414A3D]" // Couleur du texte dans la balise <span>
+          selectTextColor="#414A3D" // Couleur du texte du select
+          selectCursor="#414A3D" // Type de curseur pour le select
+          spanTextColor="#414A3D" // Couleur du texte dans la balise <span>
         />
         <PaginationTable
           totalItems={currentItems.length}
@@ -144,8 +144,8 @@ const ListEmployees = () => {
           onPageChange={handlePageChange}
           activeButtonColor={'tertiary'} // Couleur du bouton actif
           hoverButtonColor={'tertiary'} // Couleur du bouton en survol
-          width="[370px]"
-          height="[45px]"
+          width="370px"
+          height="45px"
         />
       </footer>
     </>

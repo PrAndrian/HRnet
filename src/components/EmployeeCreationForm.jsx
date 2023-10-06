@@ -5,7 +5,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createEmployee } from "../redux/features/employeesSlice";
 import PropTypes from 'prop-types';
-import DatePicker from "./DatePicker";
+// import DatePicker from "./DatePicker";
+import  DatePicker from "datepicker-cmp";
 import { SelectMenu } from 'selectmenu-cmp'
 import { areStringsPhoneticallyAlike } from "../utils/phoneticalComparaisonStrong";
 import { formatDate, isAgeDifferenceAtLeast18Years, verfyDate, verfyWordSpaces } from "../utils/verificationForm";
