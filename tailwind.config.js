@@ -6,6 +6,7 @@ export default {
     './node_modules/selectmenu-cmp/**/*.{js,ts,jsx,tsx}',
     './node_modules/table-cmp/**/*.{js,ts,jsx,tsx}',
     './node_modules/datepicker-cmp/**/*.{js,ts,jsx,tsx}',
+    './node_modules/notification-cmp/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     colors: {
