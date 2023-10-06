@@ -20,6 +20,7 @@ function calculateSoundex(str) {
 
     // Initialize the Soundex code with the first letter of the string
     let soundexCode = firstLetter;
+    let prevDigit = soundexMap[firstLetter];
 
     for (let i = 1; i < upperStr.length; i++) {
         const char = upperStr.charAt(i);
@@ -27,11 +28,17 @@ function calculateSoundex(str) {
         
         // Ignore characters that don't have a Soundex mapping
         if (soundexDigit) {
-        // Ignore consecutive duplicate digits
-        if (soundexDigit !== soundexCode.charAt(soundexCode.length - 1)) {
-            soundexCode += soundexDigit;
+            // Ignore consecutive duplicate digits
+            if (soundexDigit !== prevDigit) {
+                soundexCode += soundexDigit;
+            }
+        } else if (char !== 'H' && char !== 'W') {
+            // Ignore 'H' and 'W' if they are not separating consonants with the same code
+            prevDigit = null;
         }
-        }
+
+        // Update the previous digit
+        prevDigit = soundexDigit || prevDigit;
     }
 
     // Pad with zeros to make it 4 characters long

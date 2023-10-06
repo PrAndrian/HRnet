@@ -37,7 +37,7 @@ const EmployeeCreationForm = ({onToast}) => {
         state: { minYear: 2000, subtractionYears: -5 },
     };
 
-    const InitialErrors = {
+    const initialErrors = {
         firstName: false,
         lastName : false,
         birthdate : false,
@@ -47,108 +47,94 @@ const EmployeeCreationForm = ({onToast}) => {
         city: false,
         state: false,
         zipCode: false,
+        isExisting : false,
     }
 
     // Initialize error states for each input field
-    const [errors, setErrors] = useState(InitialErrors);
-    const [error, setError] = useState(false);
+    const [errors, setErrors] = useState(initialErrors);
 
     /**
      * Handles the form submission for creating an employee profile.
      *
      * @param {Object} event - The form submit event object.
      */
-    const handleSubmit = (event) =>{
+    const handleSubmit = (event) => {
         event.preventDefault();
-        
-        setErrors(InitialErrors)
-
+    
         const employee = {
             firstName: verfyWordSpaces(firstName),
-            lastName : verfyWordSpaces(lastName),
-            birthdate : formatDate(birthdate),
-            startDate : formatDate(startDate),
+            lastName: verfyWordSpaces(lastName),
+            birthdate: formatDate(birthdate),
+            startDate: formatDate(startDate),
             department: verfyWordSpaces(department),
             street: verfyWordSpaces(street),
             city: verfyWordSpaces(city),
             state: verfyWordSpaces(state),
             zipCode: verfyWordSpaces(zipCode),
-        }
-
+        };
+    
         const valuesEmployee = Object.values(employee);
         const regex = /^[a-zA-Z0-9\-/ éèàùìèùêâôîû]+$/;
+    
+        const newErrors = { ...initialErrors };
 
-        valuesEmployee.map((value,index)=>{
-            const YearsRestriction = index===3 ? dateRestriction.state : dateRestriction.birth
-            if(((index===2 || index===3) && verfyDate(value,YearsRestriction))){
-                const maxYear = new Date().getFullYear() - YearsRestriction.subtractionYears
-                
-                setError(true);
-                setErrors((prevErrors) => ({
-                    ...prevErrors,
-                    [Object.keys(employee)[index]]: true,
-                }));
-                onToast(true, `Date should be between ${YearsRestriction.minYear} and ${maxYear}`);
-                throw new Error(" : "+error);
-            }
-
-            if(value==='' || value===0){
-                setError(true);
-                setErrors((prevErrors) => ({
-                    ...prevErrors,
-                    [Object.keys(employee)[index]]: true,
-                }));
-                onToast(true, 'No empty inputs are allowed');
-                throw new Error(" : "+error);
-            }
-
-            if(!regex.test(value)){
-                setError(true);
-                setErrors((prevErrors) => ({
-                    ...prevErrors,
-                    [Object.keys(employee)[index]]: true,
-                }));
-                onToast(true, 'No special characters are allowed');
-                throw new Error(" : "+error);
-            }
-        })
-
-        if (!isAgeDifferenceAtLeast18Years(employee.birthdate, employee.startDate)) {
-            setError(true);
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                [Object.keys(employee)[2]]: true,
-                [Object.keys(employee)[3]]: true,
-            }));
-            onToast(true, 'Employee must be at least 18 years old');
-            throw new Error(" : "+error);
-        } 
-
-        listEmployees.forEach(theEmployee => {
-            if(theEmployee.birthdate===employee.birthdate 
-                && areStringsPhoneticallyAlike(theEmployee.firstName,employee.firstName) 
-                && areStringsPhoneticallyAlike(theEmployee.lastName,employee.lastName)
-            ){
-                setError(true);
-                onToast(true, 'Employee already exists',employee,true);
-                throw new Error(" : "+error);
+        listEmployees.forEach((theEmployee) => {
+            if (
+                theEmployee.birthdate === employee.birthdate &&
+                areStringsPhoneticallyAlike(theEmployee.firstName, employee.firstName) &&
+                areStringsPhoneticallyAlike(theEmployee.lastName, employee.lastName)
+            ) {
+                newErrors.isExisting = true
+                onToast(true, 'Employee already exists', employee, true);
             }
         });
 
-        dispatch(createEmployee([...listEmployees,employee]));
+        if (!isAgeDifferenceAtLeast18Years(employee.birthdate, employee.startDate)) {
+            newErrors.birthdate = true;
+            newErrors.startDate = true;
+            onToast(true, 'Employee must be at least 18 years old');
+        }
+    
+        valuesEmployee.forEach((value, index) => {
+            const YearsRestriction = index === 3 ? dateRestriction.state : dateRestriction.birth;
+            if ((index === 2 || index === 3) && verfyDate(value, YearsRestriction)) {
+                const maxYear = new Date().getFullYear() - YearsRestriction.subtractionYears;
+                newErrors[Object.keys(employee)[index]] = true;
+                onToast(true, `Date should be between ${YearsRestriction.minYear} and ${maxYear}`);
+            }
 
-        setError(false)
-        setFirstName('')
-        setLastName('')
-        setBirthdate('')
-        setStartDate('')
-        setdepartment('')
-        setStreet('')
-        setCity('')
-        setState('')
-        setZipCode('')
-        onToast(false, 'Employee added successfully !')
-    }
+            if (!regex.test(value)) {
+                newErrors[Object.keys(employee)[index]] = true;
+                onToast(true, 'No special characters are allowed');
+            }
+
+            if (value === '' || value.length === 0) {
+                newErrors[Object.keys(employee)[index]] = true;
+                onToast(true, 'No empty inputs are allowed');
+            }
+        });
+    
+        setErrors(newErrors);
+    
+        // Check if there are any errors
+        const hasErrors = Object.values(newErrors).some((error) => error);
+    
+        if (!hasErrors) {
+            dispatch(createEmployee([...listEmployees, employee]));
+    
+            setFirstName('');
+            setLastName('');
+            setBirthdate('');
+            setStartDate('');
+            setdepartment('');
+            setStreet('');
+            setCity('');
+            setState('');
+            setZipCode('');
+            onToast(false, 'Employee added successfully !');
+        }
+    };
+    
 
     return (
     <form 
