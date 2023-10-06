@@ -3,6 +3,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    './node_modules/selectmenu-cmp/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     colors: {
