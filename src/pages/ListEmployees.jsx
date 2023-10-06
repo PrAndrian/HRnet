@@ -7,11 +7,14 @@ import {EmployeeTable} from "table-cmp";
 import {ShowingRowTable} from "table-cmp";
 import {PaginationTable} from "table-cmp";
 import { useState } from "react";
-import { useSelector } from "react-redux"; // A décommenter selon les data que vous utilisez
-// import employees from "../data/employeeMock"
+
+// A décommenter selon les data que vous utilisez
+import { useSelector } from "react-redux"; 
+// import employees from "../data/employeeMock" 
 
 const ListEmployees = () => {
-  const listEmployees = useSelector((state) => state.employees.list) 
+  // A commenter selon les data que vous utilisez
+  const listEmployees = useSelector((state) => state.employees.list)  
   // const listEmployees = employees
 
   const [itemsPerPage, setItemsPerPage] = useState(10);
