@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createEmployee } from "../redux/features/employeesSlice";
 // import NotificationModal from "../components/notificationModal";
 import NotificationModal from "notification-cmp";
+import { Link } from "react-router-dom";
 
 
 const Home = () => {
@@ -40,6 +41,7 @@ const Home = () => {
         setter={setIsVisible}
         onYes={handleClickYes}
         isChoice={isChoice}
+        successElement={<Link className='underline' to="/employees">Check list employees</Link>}
       />
       <SeparationUI/>
       <EmployeeCreationForm  onToast={handleToast}/>
