@@ -14,8 +14,8 @@ const Navbar = () => {
       flex 
       flex-col 
       items-center
-      px-2
-      md:px-0
+      md:px-2
+      px-0
       w-fit
       md:w-[240px] 
       h-screen 
