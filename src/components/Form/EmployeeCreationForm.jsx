@@ -1,14 +1,14 @@
 import InputForm from "./InputForm";
-import departments from '../data/departments'
-import states from '../data/states'
+import departments from '../../data/departments'
+import states from '../../data/states'
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createEmployee } from "../redux/features/employeesSlice";
+import { createEmployee } from "../../redux/features/employeesSlice";
 import PropTypes from 'prop-types';
 import  DatePicker from "datepicker-cmp";
 import { SelectMenu } from 'selectmenu-cmp'
-import { areStringsPhoneticallyAlike } from "../utils/phoneticalComparaisonStrong";
-import { formatDate, isAgeDifferenceAtLeast18Years, verfyDate, verfyWordSpaces } from "../utils/verificationForm";
+import { areStringsPhoneticallyAlike } from "../../utils/phoneticalComparaisonStrong";
+import { formatDate, isAgeDifferenceAtLeast18Years, verfyDate, verfyWordSpaces } from "../../utils/verificationForm";
 
 /**
  * EmployeeCreationForm is a component for creating employee profiles.
