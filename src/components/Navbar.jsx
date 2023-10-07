@@ -57,7 +57,7 @@ const Navbar = () => {
         to="/" 
         onClick={()=>setIsOpen(false)}
         className={({ isActive, isPending }) => isPending ? "pending" : isActive ? 
-          "flex items-center w-fit md:w-[170px] font-medium  p-2 bg-secondary rounded-lg text-white" 
+          "flex items-center w-fit md:w-[170px] font-medium  p-2 bg-[#4D5C0A] rounded-lg text-white" 
         : 
           "flex items-center w-fit md:w-[170px] font-medium  p-2 hover:bg-secondary hover:rounded-lg hover:text-white"}
         >
@@ -72,7 +72,7 @@ const Navbar = () => {
           to="/employees" 
           onClick={()=>setIsOpen(false)}
           className={({ isActive, isPending }) => isPending ? "pending" : isActive ? 
-            "flex items-center ww-fit md:w-[170px] font-medium  p-2 p-2 bg-secondary rounded-lg text-white" 
+            "flex items-center ww-fit md:w-[170px] font-medium  p-2 p-2 bg-[#4D5C0A] rounded-lg text-white" 
           : 
             "flex items-center w-fit md:w-[170px] font-medium  p-2 hover:bg-secondary hover:rounded-lg hover:text-white"}>
           <FontAwesomeIcon 
