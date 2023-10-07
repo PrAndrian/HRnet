@@ -11,7 +11,6 @@ HRnet is a modernized employee file management application built using React.js,
 - [Project Structure](#project-structure)
 - [Dependencies](#dependencies)
 - [Scripts](#scripts)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Getting Started
