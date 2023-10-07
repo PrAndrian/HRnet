@@ -81,8 +81,10 @@ const EmployeeCreationForm = ({onToast}) => {
         listEmployees.forEach((theEmployee) => {
             if (
                 theEmployee.birthdate === employee.birthdate &&
-                areStringsPhoneticallyAlike(theEmployee.firstName, employee.firstName) &&
-                areStringsPhoneticallyAlike(theEmployee.lastName, employee.lastName)
+                areStringsPhoneticallyAlike(theEmployee.firstName, employee.firstName) && 
+                areStringsPhoneticallyAlike(theEmployee.lastName, employee.lastName) ||
+                areStringsPhoneticallyAlike(theEmployee.firstName, employee.lastName) &&
+                areStringsPhoneticallyAlike(theEmployee.lastName, employee.firstName)
             ) {
                 newErrors.isExisting = true
                 onToast(true, 'Employee already exists', employee, true);
