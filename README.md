@@ -86,4 +86,4 @@ Here are the main dependencies used in this project:
 
 ## License
 
-This project is licensed under the MIT License. You are free to use, modify, and distribute the code as per the terms of the license, as outlined within the "private" repository. (It should be private it is easier to share like that)
+This project is licensed under the MIT License. You are free to use, modify, and distribute the code as per the terms of the license, as outlined within the "private" repository. (It should be private but it is easier to share like that)
