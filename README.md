@@ -20,6 +20,7 @@ HRnet is a modernized employee file management application built using React.js,
 Before you begin, ensure you have the following software installed:
 
 - Node.js: Make sure you have Node.js installed on your system. You can download it from [nodejs.org](https://nodejs.org/).
+- Version : ^16.15.1
 
 ### Installation
 
