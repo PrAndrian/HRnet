@@ -1,0 +1,11 @@
+{
+  "firstName" : "John",
+  "lastName" : "Doe",
+  "birthDate" : "2000-01-01",
+  "startDate" : "2030-01-01",
+  "department" : "Sales",
+  "street" : "8530 Selby",
+  "city" : "St Coachella",
+  "state" : "Alabama",
+  "zipCode" : "92236"
+}
