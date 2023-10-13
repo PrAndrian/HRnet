@@ -21,25 +21,19 @@ describe('Test de la page ListEmployees', () => {
   
     it('Doit effectuer une recherche d\'employé', () => {
 
-      cy.get('#table-searchbar').type('John');
-  
-      cy.wait(500);
+      cy.get('#table-searchbar').type('John',{delay: 500});
   
       cy.get('table').should('contain', 'John');
     });
   
     it('Doit changer le nombre d\'éléments affichés par page', () => {
       cy.get('#show-rows').select('25'); 
-  
-      cy.wait(500);
-  
+      
       cy.get('table tbody tr').should('have.length', 20);
     });
   
     it('Doit changer de page dans la pagination', () => {
       cy.get('.inline-flex').find('button').contains('2').click();
-  
-      cy.wait(500);
       
       cy.get('table tbody tr').should('exist');
     });
